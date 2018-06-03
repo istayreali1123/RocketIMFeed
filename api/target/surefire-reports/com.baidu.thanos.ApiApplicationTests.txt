@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.baidu.thanos.ApiApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.645 s <<< FAILURE! - in com.baidu.thanos.ApiApplicationTests
+initializationError(com.baidu.thanos.ApiApplicationTests)  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalStateException: Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes=...) with your test
+

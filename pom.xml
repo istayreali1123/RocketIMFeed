@@ -13,6 +13,7 @@
         <module>api</module>
         <module>account</module>
         <module>common</module>
+        <module>dbgate</module>
     </modules>
 
     <dependencies>

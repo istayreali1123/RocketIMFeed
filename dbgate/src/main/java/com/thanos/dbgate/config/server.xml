@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user name="user">
+	<property name="password">666666</property>
+	<property name="schemas">test</property>
+</user>
