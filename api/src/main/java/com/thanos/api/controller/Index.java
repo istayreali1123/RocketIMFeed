@@ -1,8 +1,8 @@
 package com.thanos.api.controller;
 
+import com.thanos.common.BaseResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.thanos.common.BaseResponse;
 
 import java.util.ArrayList;
 import java.util.List;
