@@ -1,13 +1,12 @@
 package com.thanos.account.intereface;
 
-import com.thanos.common.BaseResponse;
-
-import java.util.List;
+import com.thanos.account.mapper.UserInfo;
+import com.thanos.common.exception.UserRegisterException;
 
 /**
  * Created by wangjialong on 5/31/18.
  */
 public interface Register {
 
-    BaseResponse.ResponseBody<List<String>> addUser(String userId);
+    void addUser(UserInfo userInfo) throws UserRegisterException;
 }

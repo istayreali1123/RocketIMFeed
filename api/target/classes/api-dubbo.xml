@@ -11,8 +11,8 @@
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:annotation package="com.thanos"/>
-    <context:component-scan base-package="com.thanos.api,com.thanos.common"/>
+    <dubbo:annotation package="com.athena" />
+    <context:component-scan base-package="com.thanos.api"/>
 
     <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
     <dubbo:application name="message-consumer"/>
@@ -23,7 +23,7 @@
 
     <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
 
-    <dubbo:reference id="register" interface="com.thanos.account.intereface.Register" check="false">
+    <dubbo:reference id="idRequest" interface="com.thanos.account.intereface.Register" check="false">
         <dubbo:method name="addUser"  timeout="10000"  />
     </dubbo:reference>
 

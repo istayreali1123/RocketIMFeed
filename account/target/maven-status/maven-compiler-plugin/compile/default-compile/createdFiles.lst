@@ -1,0 +1,4 @@
+com\thanos\account\AccountController.class
+com\thanos\account\AccountStartup.class
+com\thanos\account\intereface\Register.class
+com\thanos\account\service\AddUserImpl.class
