@@ -2,7 +2,6 @@ package com.thanos.dbgate.service.impl;
 
 
 import com.thanos.common.BaseResponse;
-import com.thanos.dbgate.bean.AccountVO;
 import com.thanos.dbgate.dao.AccountDAO;
 import com.thanos.dbgate.dto.UserDTO;
 import com.thanos.dbgate.service.IAccount;
