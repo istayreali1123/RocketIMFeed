@@ -1,25 +1,38 @@
-package com.thanos.dbgate.service;
+package com.thanos.dbgate.service.impl;
 
 
 import com.thanos.common.BaseResponse;
 import com.thanos.dbgate.bean.AccountVO;
-import com.thanos.dbgate.itf.IAccount;
+import com.thanos.dbgate.dao.AccountDAO;
+import com.thanos.dbgate.dto.UserDTO;
+import com.thanos.dbgate.service.IAccount;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by istayreali on 2018/6/3.
  */
 public class AccountServiceImpl implements IAccount {
-   public BaseResponse.ResponseBody<String> registerAccount(String registerInfo) {
+
+   private static Logger logger = Logger.getLogger(AccountServiceImpl.class.getName());
+
+   @Autowired
+   @Qualifier("com.thanos.dbgate.dao.impl.AccountDAO")
+   private AccountDAO accountDAO;
+
+   public int registerAccount(String registerInfo) throws Exception {
         BaseResponse.ResponseBody<String> resp = new BaseResponse.ResponseBody();
-        //TODO 写入数据库逻辑
-        resp.setCode("0");
-        resp.setMessage("register user successfully");
-        AccountVO accountVO = new AccountVO();
-        resp.setData(accountVO.toString());
-        return resp;
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUuid("111");
+        userDTO.setUserName("xxxx");
+        userDTO.setPassword("123456");
+        userDTO.setPhoneNnumber("11111111");
+        userDTO.setNickName("555555");
+        userDTO.setEmailAddress("123@123.com");
+        userDTO.setLastUpdateTime(null);
+        int result = accountDAO.addAccount(userDTO);
+        return result;
     }
 }

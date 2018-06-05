@@ -1,4 +1,4 @@
-package com.thanos.dbgate.itf;
+package com.thanos.dbgate.service;
 
 import com.thanos.common.BaseResponse;
 
@@ -9,5 +9,5 @@ import java.util.Map;
  */
 public interface IAccount {
     //注册账号信息
-    BaseResponse.ResponseBody<String> registerAccount(String registerInfo);
+    int registerAccount(String registerInfo) throws Exception;
 }

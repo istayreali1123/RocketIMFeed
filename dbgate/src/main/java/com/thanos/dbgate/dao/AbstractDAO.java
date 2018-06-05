@@ -1,5 +1,6 @@
 package com.thanos.dbgate.dao;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -8,7 +9,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 public abstract class AbstractDAO {
 //todo
-//    @Autowired
-//    @Qualifier("sqlSessionFactory")
-//    protected
+    @Autowired
+    @Qualifier("sqlSessionFactory")
+    protected SqlSessionFactory sqlSessionFactory;
+
+    protected abstract BaseSqlSession getSqlSession();
+
+    public SqlSessionFactory getSqlSessionFactory() {
+        return sqlSessionFactory;
+    }
+
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
 }

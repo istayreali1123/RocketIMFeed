@@ -16,14 +16,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+//import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+//import org.springframework.transaction.PlatformTransactionManager;
+//import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @Configuration
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class ApplicationConfigurations {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfigurations.class);
 
@@ -79,7 +79,7 @@ public class ApplicationConfigurations {
     @Value("${jdbc.filters}")
     private String jdbcFilters;
 
-    @Bean(name = "dataSource", initMethod = "init", destroyMethod = "close")
+    @Bean(name = "dataSource")
     public DataSource dataSource() {
         try {
             DruidDataSource ds = new DruidDataSource();
@@ -125,10 +125,10 @@ public class ApplicationConfigurations {
         }
     }
 
-    @Bean(name = "transactionManager")
-    public PlatformTransactionManager transactionManager() {
-        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
-        transactionManager.setDataSource(dataSource());
-        return transactionManager;
-    }
+//    @Bean(name = "transactionManager")
+//    public PlatformTransactionManager transactionManager() {
+//        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+//        transactionManager.setDataSource(dataSource());
+//        return transactionManager;
+//    }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+        <!--private String uuid;-->
+        <!--private String userName;-->
+        <!--private String password;-->
+        <!--private String emailAddress;-->
+        <!--private String nickName;-->
+        <!--private Date lastUpdateTime;-->
+        <!--private String avatarURL;-->
+        <!--private String phoneNnumber;-->
+
+<mapper namespace="com.thanos.dbgate.dao.AccountDAO">
+    <resultMap id="result" type="com.thanos.dbgate.dto.UserDTO">
+        <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="emailAddress" jdbcType="VARCHAR" property="emailAddress" />
+        <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+        <result column="lastUpdateTime" jdbcType="DATE" property="lastUpdateTime" />
+        <result column="avatarURL" jdbcType="VARCHAR" property="avatarURL" />
+        <result column="phoneNnumber" jdbcType="VARCHAR" property="phoneNnumber" />
+    </resultMap>
+
+    <insert id="add" parameterType="com.example.common.dto.CourierDTO">
+		INSERT INTO
+		account(uuid, userName, password, emailAddress, nickName, lastUpdateTime, avatarURL, phoneNnumber)
+		VALUES(#{uuid}, #{userName}, #{password}, #{emailAddress}, #{nickName}, #{lastUpdateTime}, #{avatarURL}, #{phoneNnumber})
+	</insert>
+
+</mapper>
