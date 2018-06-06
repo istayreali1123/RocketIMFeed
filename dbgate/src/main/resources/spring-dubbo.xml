@@ -22,7 +22,7 @@
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.thanos"/>
+    <context:component-scan base-package="com.thanos.dbgate"/>
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
     <dubbo:application name="dbgate"/>
@@ -42,3 +42,4 @@
 
 
 </beans>
+

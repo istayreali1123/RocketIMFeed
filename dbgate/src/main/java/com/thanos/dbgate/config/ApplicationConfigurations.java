@@ -16,13 +16,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
 //import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 //import org.springframework.transaction.PlatformTransactionManager;
 //import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-@Configuration
+@Component
 //@EnableTransactionManagement
 public class ApplicationConfigurations {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfigurations.class);
@@ -38,43 +39,43 @@ public class ApplicationConfigurations {
     private String jdbcPassword;
 
     @Value("${jdbc.initialSize}")
-    private int jdbcInitialSize;
+    private String jdbcInitialSize;
 
     @Value("${jdbc.minIdle}")
-    private int jdbcMinIdle;
+    private String jdbcMinIdle;
 
     @Value("${jdbc.maxActive}")
-    private int jdbcMaxActive;
+    private String jdbcMaxActive;
 
     @Value("${jdbc.maxWait}")
-    private int jdbcMaxWait;
+    private String jdbcMaxWait;
 
     @Value("${jdbc.timeBetweenEvictionRunsMillis}")
-    private long jdbcTimeBetweenEvictionRunsMillis;
+    private String jdbcTimeBetweenEvictionRunsMillis;
 
     @Value("${jdbc.minEvictableIdleTimeMillis}")
-    private long jdbcMinEvictableIdleTimeMillis;
+    private String jdbcMinEvictableIdleTimeMillis;
 
     @Value("${jdbc.validationQuery}")
     private String jdbcValidationQuery;
 
     @Value("${jdbc.validationQueryTimeout}")
-    private int jdbcValidationQueryTimeout;
+    private String jdbcValidationQueryTimeout;
 
     @Value("${jdbc.testWhileIdle}")
-    private boolean jdbcTestWhileIdle;
+    private String jdbcTestWhileIdle;
 
     @Value("${jdbc.testOnBorrow}")
-    private boolean jdbcTestOnBorrow;
+    private String jdbcTestOnBorrow;
 
     @Value("${jdbc.testOnReturn}")
-    private boolean jdbcTestOnReturn;
+    private String jdbcTestOnReturn;
 
     @Value("${jdbc.preparedStatements}")
-    private boolean jdbcPreparedStatements;
+    private String jdbcPreparedStatements;
 
     @Value("${jdbc.maxPoolPreparedStatementPerConnectionSize}")
-    private int jdbcMaxPoolPreparedStatementPerConnectionSize;
+    private String jdbcMaxPoolPreparedStatementPerConnectionSize;
 
     @Value("${jdbc.filters}")
     private String jdbcFilters;
@@ -88,19 +89,19 @@ public class ApplicationConfigurations {
 
             ResourceLoader resourceLoader = new DefaultResourceLoader();
             ds.setPassword(jdbcPassword);
-            ds.setInitialSize(jdbcInitialSize);
-            ds.setMinIdle(jdbcMinIdle);
-            ds.setMaxActive(jdbcMaxActive);
-            ds.setMaxWait(jdbcMaxWait);
-            ds.setTimeBetweenEvictionRunsMillis(jdbcTimeBetweenEvictionRunsMillis);
-            ds.setMinEvictableIdleTimeMillis(jdbcMinEvictableIdleTimeMillis);
+            ds.setInitialSize(Integer.valueOf(jdbcInitialSize));
+            ds.setMinIdle(Integer.valueOf(jdbcMinIdle));
+            ds.setMaxActive(Integer.valueOf(jdbcMaxActive));
+            ds.setMaxWait(Integer.valueOf(jdbcMaxWait));
+            ds.setTimeBetweenEvictionRunsMillis(Integer.valueOf(jdbcTimeBetweenEvictionRunsMillis));
+            ds.setMinEvictableIdleTimeMillis(Integer.valueOf(jdbcMinEvictableIdleTimeMillis));
             ds.setValidationQuery(jdbcValidationQuery);
-            ds.setValidationQueryTimeout(jdbcValidationQueryTimeout);
-            ds.setTestWhileIdle(jdbcTestWhileIdle);
-            ds.setTestOnBorrow(jdbcTestOnBorrow);
-            ds.setTestOnReturn(jdbcTestOnReturn);
-            ds.setPoolPreparedStatements(jdbcPreparedStatements);
-            ds.setMaxPoolPreparedStatementPerConnectionSize(jdbcMaxPoolPreparedStatementPerConnectionSize);
+            ds.setValidationQueryTimeout(Integer.valueOf(jdbcValidationQueryTimeout));
+            ds.setTestWhileIdle(Boolean.valueOf(jdbcTestWhileIdle));
+            ds.setTestOnBorrow(Boolean.valueOf(jdbcTestOnBorrow));
+            ds.setTestOnReturn(Boolean.valueOf(jdbcTestOnReturn));
+            ds.setPoolPreparedStatements(Boolean.valueOf(jdbcPreparedStatements));
+            ds.setMaxPoolPreparedStatementPerConnectionSize(Integer.valueOf(jdbcMaxPoolPreparedStatementPerConnectionSize));
             ds.setFilters(jdbcFilters);
 
             return ds;
@@ -124,6 +125,12 @@ public class ApplicationConfigurations {
             return null;
         }
     }
+
+
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+//        return new PropertySourcesPlaceholderConfigurer();
+//    }
 
 //    @Bean(name = "transactionManager")
 //    public PlatformTransactionManager transactionManager() {
