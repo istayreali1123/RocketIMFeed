@@ -11,7 +11,8 @@
         <!--private String avatarURL;-->
         <!--private String phoneNnumber;-->
 
-<mapper namespace="com.thanos.dbgate.dao.AccountDAO">
+<mapper namespace="com.thanos.dbgate.mapper.AccountDAO">
+
     <resultMap id="result" type="com.thanos.dbgate.dto.UserDTO">
         <result column="uuid" jdbcType="VARCHAR" property="uuid" />
         <result column="userName" jdbcType="VARCHAR" property="userName" />
@@ -23,7 +24,7 @@
         <result column="phoneNnumber" jdbcType="VARCHAR" property="phoneNnumber" />
     </resultMap>
 
-    <insert id="add" parameterType="com.example.common.dto.CourierDTO">
+    <insert id="addAccount" parameterType="com.example.common.dto.UserDTO">
 		INSERT INTO
 		account(uuid, userName, password, emailAddress, nickName, lastUpdateTime, avatarURL, phoneNnumber)
 		VALUES(#{uuid}, #{userName}, #{password}, #{emailAddress}, #{nickName}, #{lastUpdateTime}, #{avatarURL}, #{phoneNnumber})

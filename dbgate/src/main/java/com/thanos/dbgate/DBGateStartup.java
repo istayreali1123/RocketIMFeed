@@ -15,7 +15,7 @@ public class DBGateStartup {
 
     static {
         context = new ClassPathXmlApplicationContext(
-                "classpath:spring-dubbo.xml", "classpath:mybatis-config.xml", "classpath:applicationContext.xml");
+                "classpath:spring-dubbo.xml", "classpath:applicationContext.xml");
         context.start();
         //ctx.start();
     }

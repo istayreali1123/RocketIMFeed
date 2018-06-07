@@ -2,7 +2,7 @@ package com.thanos.dbgate.service.impl;
 
 
 import com.thanos.common.BaseResponse;
-import com.thanos.dbgate.dao.AccountDAO;
+import com.thanos.dbgate.mapper.AccountDAO;
 import com.thanos.dbgate.dto.UserDTO;
 import com.thanos.dbgate.service.IAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ public class AccountServiceImpl implements IAccount {
    private static Logger logger = Logger.getLogger(AccountServiceImpl.class.getName());
 
    @Autowired
-   @Qualifier("com.thanos.dbgate.dao.impl.AccountDAO")
    private AccountDAO accountDAO;
 
    public int registerAccount(String registerInfo) throws Exception {
