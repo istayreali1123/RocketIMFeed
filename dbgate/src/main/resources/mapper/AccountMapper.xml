@@ -13,18 +13,18 @@
 
 <mapper namespace="com.thanos.dbgate.mapper.AccountDAO">
 
-    <resultMap id="result" type="com.thanos.dbgate.dto.UserDTO">
-        <result column="uuid" jdbcType="VARCHAR" property="uuid" />
-        <result column="userName" jdbcType="VARCHAR" property="userName" />
-        <result column="password" jdbcType="VARCHAR" property="password" />
-        <result column="emailAddress" jdbcType="VARCHAR" property="emailAddress" />
-        <result column="nickName" jdbcType="VARCHAR" property="nickName" />
-        <result column="lastUpdateTime" jdbcType="DATE" property="lastUpdateTime" />
-        <result column="avatarURL" jdbcType="VARCHAR" property="avatarURL" />
-        <result column="phoneNnumber" jdbcType="VARCHAR" property="phoneNnumber" />
-    </resultMap>
+    <!--<resultMap id="UserResult" type="user">-->
+        <!--<result column="uuid" jdbcType="VARCHAR" property="uuid" />-->
+        <!--<result column="userName" jdbcType="VARCHAR" property="userName" />-->
+        <!--<result column="password" jdbcType="VARCHAR" property="password" />-->
+        <!--<result column="emailAddress" jdbcType="VARCHAR" property="emailAddress" />-->
+        <!--<result column="nickName" jdbcType="VARCHAR" property="nickName" />-->
+        <!--<result column="lastUpdateTime" jdbcType="DATE" property="lastUpdateTime" />-->
+        <!--<result column="avatarURL" jdbcType="VARCHAR" property="avatarURL" />-->
+        <!--<result column="phoneNnumber" jdbcType="VARCHAR" property="phoneNnumber" />-->
+    <!--</resultMap>-->
 
-    <insert id="addAccount" parameterType="com.example.common.dto.UserDTO">
+    <insert id="addAccount" parameterType="user">
 		INSERT INTO
 		account(uuid, userName, password, emailAddress, nickName, lastUpdateTime, avatarURL, phoneNnumber)
 		VALUES(#{uuid}, #{userName}, #{password}, #{emailAddress}, #{nickName}, #{lastUpdateTime}, #{avatarURL}, #{phoneNnumber})

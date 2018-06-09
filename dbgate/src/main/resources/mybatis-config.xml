@@ -25,6 +25,11 @@
         <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
     </settings>
 
+
+    <!-- 别名 -->
+    <typeAliases>
+        <typeAlias type="com.thanos.dbgate.dto.UserDTO" alias="user"/>
+    </typeAliases>
     <mappers>
         <mapper resource="mapper/AccountMapper.xml" />
     </mappers>

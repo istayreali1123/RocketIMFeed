@@ -1,12 +1,10 @@
 package com.thanos.dbgate;
 
 import com.thanos.common.utils.SpringContextUtil;
+import com.thanos.dbgate.service.impl.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
-import sun.awt.AppContext;
 
 /**
  * Created by istayreali on 2018/6/3.
@@ -17,19 +15,29 @@ public class DBGateController implements Runnable {
     @Autowired
     public SpringContextUtil springContextUtil;
 
+    @Autowired
+    private AccountServiceImpl accountService;
+
     private boolean running = false;
     private Thread thread;
 
+    @Autowired
     public DBGateController() {
         //该thread被该controller持有
         thread = new Thread(this);
     }
 
     public void start() {
-        running = true;
-        ClassPathXmlApplicationContext context = (ClassPathXmlApplicationContext) springContextUtil.getApplicationContext();
-        context.start();
-        thread.start();
+        try {
+            accountService.registerAccount("");
+        }catch (Exception exception) {
+            System.out.print(exception.getMessage());
+        }
+
+//        running = true;
+//        ClassPathXmlApplicationContext context = (ClassPathXmlApplicationContext) springContextUtil.getApplicationContext();
+//        context.start();
+//        thread.start();
     }
 
     public void run() {

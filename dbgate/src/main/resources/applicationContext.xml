@@ -7,18 +7,32 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
     <!-- 定义开发的profile -->
-    <beans profile="development">
+    <!--<beans profile="development">-->
         <!-- 只扫描开发环境下使用的类 -->
         <context:component-scan base-package="com.thanos.dbgate,com.thanos.common" />
         <!-- 加载开发使用的配置文件 -->
         <util:properties id="config" location="classpath:application.properties"/>
 
+
+        <!-- 配置dbcp数据源 -->
+        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+            <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+            <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/thanos?useUnicode=true&amp;cmpcharacterEncoding=utf8"/>
+            <property name="user" value="root"/>
+            <property name="password" value="123456"/>
+            <property name="initialPoolSize" value="5" />
+            <property name="minPoolSize" value="5" />
+            <property name="maxPoolSize" value="10" />
+            <property name="maxIdleTime" value="100" />
+        </bean>
+
+        <!-- 配置mybatisSqlSessionFactoryBean -->
         <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
             <property name="dataSource" ref="dataSource" />
             <!-- mybatis配置文件路径 -->
-            <property name="configLocation" value="" />
+            <property name="configLocation" value="classpath:mybatis-config.xml" />
             <!-- 实体类映射文件路径,这里只有一个就写死了，多个可以使用mybatis/*.xml来替代 -->
-            <property name="mapperLocations" value="classpath:mybatis-config.xml" />
+            <!--<property name="mapperLocations" value="classpath:mapper/AccountMapper.xml" />-->
         </bean>
 
         <!-- 配置SqlSessionTemplate -->
@@ -26,20 +40,17 @@
             <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
         </bean>
 
+        <!-- 配置mybatis mapper接口 -->
         <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
             <property name="basePackage" value="com.thanos.dbgate.mapper"/>
             <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate"/>
         </bean>
 
-        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-            <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-            <property name="jdbcUrl" value="jdbc:mysql://127.0.01.1:6600/HiClub?useUnicode=true&amp;cmpcharacterEncoding=utf8"/>
-            <property name="user" value="cloud_admin"/>
-            <property name="password" value="IaaS@OS-CLOUD8!"/>
+        <bean id="dbgateController" class="com.thanos.dbgate.DBGateController">
         </bean>
 
 
-    </beans>
+    <!--</beans>-->
 
 </beans>
 

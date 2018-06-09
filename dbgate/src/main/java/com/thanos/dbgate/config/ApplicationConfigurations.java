@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
-@Component
+@Configuration
 //@EnableTransactionManagement
 public class ApplicationConfigurations {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfigurations.class);
