@@ -23,8 +23,8 @@ public class AccountController implements Runnable {
 
     public void start() {
         running = true;
-        ClassPathXmlApplicationContext context = (ClassPathXmlApplicationContext )springContextUtil.getApplicationContext();
-        context.start();
+        //initialize dbgate service
+        ClassPathXmlApplicationContext dbContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         thread.start();
     }
 

@@ -2,12 +2,13 @@ package com.thanos.common.pojo;
 
 import com.alibaba.fastjson.JSON;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by istayreali on 2018/6/2.
  */
-public class UserMapper extends AbstractMapper {
+public class UserMapper extends AbstractMapper implements Serializable {
 
     private String uuid;
 

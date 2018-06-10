@@ -6,10 +6,10 @@ package com.thanos.common.exception;
 public class PhoneNumberException extends UserRegisterException {
 
     public static class VerifyCodeException extends PhoneNumberException {
-
+        public String code = "1001";
     }
 
     public static class FormatException extends PhoneNumberException {
-
+        public String code = "1002";
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("com.thanos.dbgate.mapper.AccountDAO")
-public class AccountDAOImpl extends SimpleDAO implements AccountDAO {
+public abstract class AccountDAOImpl extends SimpleDAO implements AccountDAO {
 
 
     private AccountDAO accountDAO;
@@ -30,10 +30,6 @@ public class AccountDAOImpl extends SimpleDAO implements AccountDAO {
 //        BaseSqlSession baseSqlSession = getSqlSession();
 //        return baseSqlSession.getMapper(AccountDAO.class).addAccount(userMapper);
         return accountDAO.addAccount(userMapper);
-    }
-
-    public UserMapper queryUser(String phoneNumber, String password) {
-        return null;
     }
 
 }
