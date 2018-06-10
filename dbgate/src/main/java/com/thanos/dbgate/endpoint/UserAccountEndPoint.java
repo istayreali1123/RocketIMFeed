@@ -36,4 +36,8 @@ public class UserAccountEndPoint {
         return instance.acountEntity.allocUserId(uuidMapper);
     }
 
+    public static UserIdAllocMapper queyUserIdByPhone(String phone) {
+        return instance.acountEntity.queryUserIdByPhone(phone);
+    }
+
 }

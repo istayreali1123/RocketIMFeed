@@ -14,4 +14,8 @@ public interface AccountDAO {
     UserMapper queryUser(@Param("phoneNumber")String phoneNumber, @Param("password") String password);
 
     long uuidAlloc(@Param("uuidAlloc") UserIdAllocMapper uuidAlloc);
+
+    UserIdAllocMapper queryUidByPhone(@Param("phone") String phone);
+
+
 }

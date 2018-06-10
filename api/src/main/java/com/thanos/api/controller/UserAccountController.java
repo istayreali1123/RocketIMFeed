@@ -2,18 +2,23 @@ package com.thanos.api.controller;
 
 import com.thanos.common.BaseResponse;
 import com.thanos.api.service.account.UserAccount;
+import com.thanos.common.exception.UserRegisterException;
 import com.thanos.common.pojo.UserMapper;
+import com.thanos.dbgate.service.impl.AccountServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 /**
  * Created by wangjialong on 6/3/18.
  */
 @RestController
 public class UserAccountController extends AbstractController {
+
+    private static Logger logger = Logger.getLogger(UserAccountController.class.getName());
 
     UserAccount userAccountHandler;
 
@@ -30,8 +35,12 @@ public class UserAccountController extends AbstractController {
             RespObj data = wrapResponse(userInfo);
             resp.setData(data);
             resp.setCode("0");
+        } catch (UserRegisterException e) {
+            String code = e.getCode();
+            resp.setCode(code);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.warning("error: " + e.getCause());
             resp.setCode("-1");
         }
         return resp;
@@ -42,6 +51,7 @@ public class UserAccountController extends AbstractController {
         data.budss = userInfo.getBudss();
         data.name = userInfo.getNickName();
         data.userName = userInfo.getUserName();
+        data.userIcon = userInfo.getAvatarURL();
         data.isLogin = userInfo.getIsOnline();
         data.loginTime = System.currentTimeMillis();
         return data;
@@ -70,5 +80,6 @@ public class UserAccountController extends AbstractController {
         public String userName;
         public char isLogin;
         public long loginTime;
+        public String userIcon;
     }
 }

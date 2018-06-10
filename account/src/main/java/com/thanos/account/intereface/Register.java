@@ -1,6 +1,5 @@
 package com.thanos.account.intereface;
 
-import com.thanos.common.exception.UserIdAllocException;
 import com.thanos.common.exception.UserRegisterException;
 import com.thanos.common.pojo.UserMapper;
 
@@ -9,7 +8,9 @@ import com.thanos.common.pojo.UserMapper;
  */
 public interface Register {
 
-    long userIdAlloc(String osid) throws UserIdAllocException;
+    long userIdAlloc(String osid) throws UserRegisterException.UserIdAllocException;
 
     void addUser(UserMapper userInfo) throws UserRegisterException;
+
+    long queryUserIdByPhone(String phone);
 }

@@ -1,10 +1,8 @@
 package com.thanos.api.service.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.thanos.account.intereface.Login;
 import com.thanos.account.intereface.Register;
 import com.thanos.common.exception.UserRegisterException;
-import com.thanos.common.exception.PhoneNumberException;
 import com.thanos.common.pojo.UserMapper;
 import com.thanos.common.utils.MD5Util;
 import org.springframework.stereotype.Service;
@@ -59,7 +57,11 @@ public class UserAccountImpl implements UserAccount {
         return null;
     }
 
-    public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {
-
+    public void verifyPhoneNumber(String phoneNumber) throws
+            UserRegisterException.PhoneAlreadyUsedException {
+        long userId = registerHandler.queryUserIdByPhone(phoneNumber);
+        if (userId != 0) {
+            throw new UserRegisterException.PhoneAlreadyUsedException();
+        }
     }
 }

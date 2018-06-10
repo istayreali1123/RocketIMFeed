@@ -53,4 +53,8 @@
         VALUES (#{uuidAlloc.osid})
     </insert>
 
+    <select id="queryUidByPhone" resultType="com.thanos.common.pojo.UserIdAllocMapper" >
+        select id, osid, createTime from uuid_alloc where osid=#{phone}
+    </select>
+
 </mapper>

@@ -13,12 +13,11 @@ public class UserIdAllocMapper implements Serializable {
 
     public long createTime = System.currentTimeMillis();
 
-    public UserIdAllocMapper(String osid) {
-        this.osid = osid;
-    }
-
     public void setId(long id) {
         this.id = id;
+    }
+
+    public UserIdAllocMapper() {
     }
 
     public void setOsid(String osid) {

@@ -1,6 +1,5 @@
 package com.thanos.api.service.account;
 
-import com.thanos.common.exception.PhoneNumberException;
 import com.thanos.common.exception.UserRegisterException;
 import com.thanos.common.pojo.UserMapper;
 
@@ -13,7 +12,7 @@ public interface UserAccount {
                                    String userIcon, String verifyCode) throws UserRegisterException;
 
 
-    void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException;
+    void verifyPhoneNumber(String phoneNumber) throws UserRegisterException.PhoneAlreadyUsedException;
 
     UserMapper userLonginByPhone(String phone, String password);
 

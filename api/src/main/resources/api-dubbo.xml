@@ -26,6 +26,7 @@
     <dubbo:reference id="register" interface="com.thanos.account.intereface.Register" check="false">
         <dubbo:method name="addUser"  timeout="10000"  />
         <dubbo:method name="idalloc"  timeout="10000" />
+        <dubbo:method name="queryUserIdByPhone" timeout="10000" />
     </dubbo:reference>
 
 </beans>

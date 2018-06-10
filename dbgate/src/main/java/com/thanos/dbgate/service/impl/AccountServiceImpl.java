@@ -2,7 +2,6 @@ package com.thanos.dbgate.service.impl;
 
 
 import com.thanos.common.BaseResponse;
-import com.thanos.common.exception.UserIdAllocException;
 import com.thanos.common.exception.UserRegisterException;
 import com.thanos.common.pojo.UserIdAllocMapper;
 import com.thanos.common.pojo.UserMapper;
@@ -52,10 +51,16 @@ public class AccountServiceImpl implements IAccount {
        return accountDAO.queryUser(phoneNumber, password);
     }
 
-    public
 
-    long allocUserId(UserIdAllocMapper uuidMapper) throws UserIdAllocException {
+    public long allocUserId(UserIdAllocMapper uuidMapper)
+            throws UserRegisterException.UserIdAllocException {
        accountDAO.uuidAlloc(uuidMapper);
        return uuidMapper.getId();
     }
+
+    public UserIdAllocMapper queryUserIdByPhone(String phone) {
+       return accountDAO.queryUidByPhone(phone);
+    }
+
+
 }
