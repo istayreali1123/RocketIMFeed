@@ -35,4 +35,5 @@ public class AccountDAOImpl extends SimpleDAO implements AccountDAO {
     public UserMapper queryUser(String phoneNumber, String password) {
         return null;
     }
+
 }
