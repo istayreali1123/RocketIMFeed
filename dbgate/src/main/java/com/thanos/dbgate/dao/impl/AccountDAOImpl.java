@@ -32,4 +32,8 @@ public class AccountDAOImpl extends SimpleDAO implements AccountDAO {
 //        return baseSqlSession.getMapper(AccountDAO.class).addAccount(userDTO);
         return accountDAO.addAccount(userDTO);
     }
+
+    public UserDTO queryUser(String phoneNumber, String password) {
+        return null;
+    }
 }

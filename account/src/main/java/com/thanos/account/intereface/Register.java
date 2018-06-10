@@ -1,6 +1,6 @@
 package com.thanos.account.intereface;
 
-import com.thanos.account.mapper.UserInfo;
+import com.thanos.common.pojo.UserInfo;
 import com.thanos.common.exception.UserRegisterException;
 
 /**

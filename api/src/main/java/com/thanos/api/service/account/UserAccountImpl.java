@@ -1,12 +1,12 @@
 package com.thanos.api.service.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.thanos.account.intereface.Login;
 import com.thanos.account.intereface.Register;
-import com.thanos.account.mapper.UserInfo;
+import com.thanos.common.pojo.UserInfo;
 import com.thanos.common.exception.UserRegisterException;
 import com.thanos.common.exception.PhoneNumberException;
 import com.thanos.common.utils.MD5Util;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /*
@@ -17,6 +17,9 @@ public class UserAccountImpl implements UserAccount {
 
     @Reference
     Register registerHandler;
+
+    @Reference
+    Login loginHandler;
 
     public UserInfo registerByPhoneNumber(String phoneNumber, String password, String nickname,
                                       String userIcon, String verifyCode) throws UserRegisterException {
@@ -41,6 +44,18 @@ public class UserAccountImpl implements UserAccount {
 
         return userInfo;
 
+    }
+
+    public UserInfo userLonginByPhone(String phone, String password) {
+        // step1: encrypt the passpword
+        password = MD5Util.md5(MD5Util.md5(password));
+
+        // step2: verify the passpord
+        UserInfo userInfo =  loginHandler.userLonginByPhone(phone, password);
+
+        //step3. activate the user session, generate the bduss
+
+        return userInfo;
     }
 
     public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {

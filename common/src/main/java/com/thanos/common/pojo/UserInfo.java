@@ -1,4 +1,4 @@
-package com.thanos.account.mapper;
+package com.thanos.common.pojo;
 
 
 import java.io.Serializable;

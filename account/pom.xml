@@ -12,12 +12,18 @@
         <groupId>com.thanos</groupId>
         <artifactId>all</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>com.thanos</groupId>
             <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thanos</groupId>
+            <artifactId>dbgate</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

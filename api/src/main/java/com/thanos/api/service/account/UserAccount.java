@@ -1,6 +1,6 @@
 package com.thanos.api.service.account;
 
-import com.thanos.account.mapper.UserInfo;
+import com.thanos.common.pojo.UserInfo;
 import com.thanos.common.exception.PhoneNumberException;
 import com.thanos.common.exception.UserRegisterException;
 
@@ -14,4 +14,7 @@ public interface UserAccount {
 
 
     void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException;
+
+    UserInfo userLonginByPhone(String phone, String password);
+
 }
