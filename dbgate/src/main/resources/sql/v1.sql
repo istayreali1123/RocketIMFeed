@@ -10,5 +10,6 @@ CREATE TABLE `account` (
   `avatarURL` varchar(1024) DEFAULT '' COMMENT 'url of user icon',
   `phoneNumber` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uuid` (`uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `uuid` (`uuid`),
+  UNIQUE KEY `phoneNumber` (`phoneNumber`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;

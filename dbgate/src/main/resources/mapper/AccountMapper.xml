@@ -41,7 +41,7 @@
 		account(uuid, userName, password, emailAddress, nickName, avatarURL, phoneNumber)
 		VALUES(#{user.uuid}, #{user.userName}, #{user.password}, #{user.emailAddress}, #{user.nickName}, #{user.avatarURL}, #{user.phoneNnumber})
 	</insert>
-    
+
     <select id="queryUser" resultType="com.thanos.common.pojo.UserMapper">
         select uuid, userName, password, emailAddress, nickName, avatarURL, phoneNumber, createTime, lastUpdateTime
         from account where phoneNumber=#{phoneNumber} and password=#{password}
