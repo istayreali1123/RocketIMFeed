@@ -18,19 +18,20 @@ public class UserAccountImpl implements UserAccount {
     @Reference
     Register registerHandler;
 
-    @Reference
-    Login loginHandler;
-
     public UserMapper registerByPhoneNumber(String phoneNumber, String password, String nickname,
                                             String userIcon, String verifyCode) throws UserRegisterException {
         //step1: check if the phone number has been used
         verifyPhoneNumber(phoneNumber);
 
-        //step3: do double md5 to password, password should be encrypted in client first
+        //step2: do double md5 to password, password should be encrypted in client first
         password = MD5Util.md5(MD5Util.md5(password));
+
+        //step3: allocate user id
+        long userId = registerHandler.userIdAlloc(phoneNumber);
 
         //step2: build userInfo Instance
         UserMapper userInfo = new UserMapper();
+        userInfo.setUuid(String.valueOf(userId));
         userInfo.setUserName(phoneNumber);
         userInfo.setPhoneNumber(phoneNumber);
         userInfo.setPassword(password);
@@ -51,11 +52,11 @@ public class UserAccountImpl implements UserAccount {
         password = MD5Util.md5(MD5Util.md5(password));
 
         // step2: verify the passpord
-        UserMapper userInfo =  loginHandler.userLonginByPhone(phone, password);
+        //UserMapper userInfo =  loginHandler.userLonginByPhone(phone, password);
 
         //step3. activate the user session, generate the bduss
 
-        return userInfo;
+        return null;
     }
 
     public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {

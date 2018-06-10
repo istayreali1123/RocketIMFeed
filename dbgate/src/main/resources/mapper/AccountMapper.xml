@@ -47,4 +47,10 @@
         from account where phoneNumber=#{phoneNumber} and password=#{password}
     </select>
 
+    <insert id="uuidAlloc" useGeneratedKeys="true" keyProperty="uuidAlloc.id" parameterType="com.thanos.common.pojo.UserIdAllocMapper" >
+        insert into
+        uuid_alloc(osid)
+        VALUES (#{uuidAlloc.osid})
+    </insert>
+
 </mapper>
