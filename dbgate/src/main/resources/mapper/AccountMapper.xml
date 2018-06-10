@@ -24,10 +24,27 @@
         <!--<result column="phoneNnumber" jdbcType="VARCHAR" property="phoneNnumber" />-->
     <!--</resultMap>-->
 
-    <insert id="addAccount" parameterType="user">
+    <resultMap id="result" type="com.thanos.common.pojo.UserMapper">
+        <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="emailAddress" jdbcType="VARCHAR" property="emailAddress" />
+        <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+        <result column="lastUpdateTime" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+        <result column="avatarURL" jdbcType="VARCHAR" property="avatarURL" />
+        <result column="phoneNnumber" jdbcType="VARCHAR" property="phoneNnumber" />
+    </resultMap>
+
+    <insert id="addAccount" parameterType="com.thanos.common.pojo.UserMapper">
 		INSERT INTO
-		account(uuid, userName, password, emailAddress, nickName, lastUpdateTime, avatarURL, phoneNnumber)
-		VALUES(#{uuid}, #{userName}, #{password}, #{emailAddress}, #{nickName}, #{lastUpdateTime}, #{avatarURL}, #{phoneNnumber})
+		account(uuid, userName, password, emailAddress, nickName, avatarURL, phoneNumber)
+		VALUES(#{user.uuid}, #{user.userName}, #{user.password}, #{user.emailAddress}, #{user.nickName}, #{user.avatarURL}, #{user.phoneNnumber})
 	</insert>
+    
+    <select id="queryUser" resultType="com.thanos.common.pojo.UserMapper">
+        select uuid, userName, password, emailAddress, nickName, avatarURL, phoneNumber, createTime, lastUpdateTime
+        from account where phoneNumber=#{phoneNumber} and password=#{password}
+    </select>
 
 </mapper>

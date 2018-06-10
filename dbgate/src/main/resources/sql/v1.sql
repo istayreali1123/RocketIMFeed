@@ -1,11 +1,14 @@
-create table account(
-    id int primary key auto_increment,#auto_increment只是MySQL特有的
-    uuid varchar(20) ,
-    userName varchar(20),
-    password varchar(10),
-    emailAddress varchar(10),
-    nickName varchar(20),
-    lastUpdateTime date,
-    avatarURL varchar(20),
-    phoneNnumber varchar(20)
-);
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(20) DEFAULT NULL,
+  `userName` varchar(20) DEFAULT NULL,
+  `password` varchar(100) NOT NULL DEFAULT '' COMMENT 'user password field',
+  `emailAddress` varchar(10) DEFAULT NULL,
+  `nickName` varchar(20) DEFAULT NULL,
+  `lastUpdateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatarURL` varchar(1024) DEFAULT '' COMMENT 'url of user icon',
+  `phoneNumber` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uuid` (`uuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;

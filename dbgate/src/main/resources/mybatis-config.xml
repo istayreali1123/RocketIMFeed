@@ -28,7 +28,7 @@
 
     <!-- 别名 -->
     <typeAliases>
-        <typeAlias type="com.thanos.dbgate.dto.UserDTO" alias="user"/>
+        <typeAlias type="com.thanos.common.pojo.UserMapper" alias="user"/>
     </typeAliases>
     <mappers>
         <mapper resource="mapper/AccountMapper.xml" />

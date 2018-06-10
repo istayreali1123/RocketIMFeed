@@ -1,12 +1,14 @@
 package com.thanos.dbgate.mapper;
 
-import com.thanos.dbgate.dto.UserDTO;
-import org.springframework.stereotype.Component;
+import com.thanos.common.pojo.UserMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 //mybatis接口mapper需要加@Repository注解，方可直接在Service层直接自动装配注入。
-@Component
+@Repository("acountDaoMapper")
 public interface AccountDAO {
 
-    int addAccount(UserDTO userDTO) throws Exception;
+    int addAccount(@Param("user") UserMapper user) throws Exception;
+
+    UserMapper queryUser(@Param("phoneNumber")String phoneNumber, @Param("password") String password);
 }

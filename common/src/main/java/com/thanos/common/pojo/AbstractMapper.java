@@ -1,13 +1,13 @@
-package com.thanos.dbgate.dto;
+package com.thanos.common.pojo;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class BaseDTO {
+public class AbstractMapper {
 
-    private static Logger logger = Logger.getLogger(BaseDTO.class.getName());
+    private static Logger logger = Logger.getLogger(AbstractMapper.class.getName());
 
 
     @Override

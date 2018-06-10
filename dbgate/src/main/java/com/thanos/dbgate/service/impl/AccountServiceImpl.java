@@ -2,14 +2,13 @@ package com.thanos.dbgate.service.impl;
 
 
 import com.thanos.common.BaseResponse;
-import com.thanos.dbgate.dao.impl.AccountDAOImpl;
+import com.thanos.common.exception.UserRegisterException;
+import com.thanos.common.pojo.UserMapper;
 import com.thanos.dbgate.mapper.AccountDAO;
-import com.thanos.dbgate.dto.UserDTO;
 import com.thanos.dbgate.service.IAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import java.util.logging.Logger;
 
 /**
@@ -21,20 +20,33 @@ public class AccountServiceImpl implements IAccount {
    private static Logger logger = Logger.getLogger(AccountServiceImpl.class.getName());
 
    @Autowired
-   private AccountDAOImpl accountDAO;
-
+   @Qualifier("acountDaoMapper")
+   private AccountDAO accountDAO;
 
    public int registerAccount(String registerInfo) throws Exception {
         BaseResponse.ResponseBody<String> resp = new BaseResponse.ResponseBody();
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUuid("111");
-        userDTO.setUserName("xxxx");
-        userDTO.setPassword("123456");
-        userDTO.setPhoneNnumber("11111111");
-        userDTO.setNickName("555555");
-        userDTO.setEmailAddress("1.com");
-        userDTO.setLastUpdateTime(null);
-        int result = accountDAO.addAccount(userDTO);
+        UserMapper userMapper = new UserMapper();
+        userMapper.setUuid("111");
+        userMapper.setUserName("xxxx");
+        userMapper.setPassword("123456");
+        userMapper.setPhoneNumber("11111111");
+        userMapper.setNickName("555555");
+        userMapper.setEmailAddress("1.com");
+        userMapper.setLastUpdateTime(0);
+        int result = accountDAO.addAccount(userMapper);
         return result;
+    }
+
+    public void userRegister(UserMapper userInfo) throws UserRegisterException {
+       try{
+           accountDAO.addAccount(userInfo);
+       } catch (Exception e) {
+           logger.warning("add user exception " + e.getCause());
+           throw new UserRegisterException();
+       }
+    }
+
+    public UserMapper userLonginByPhone(String phoneNumber, String password) {
+       return accountDAO.queryUser(phoneNumber, password);
     }
 }
