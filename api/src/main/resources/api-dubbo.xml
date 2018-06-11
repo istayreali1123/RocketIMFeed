@@ -29,4 +29,8 @@
         <dubbo:method name="queryUserIdByPhone" timeout="10000" />
     </dubbo:reference>
 
+    <dubbo:reference id="Login" interface="com.thanos.account.intereface.Login" check="false"  >
+        <dubbo:method name="userLonginByPhone" timeout="10000" />
+    </dubbo:reference>
+
 </beans>

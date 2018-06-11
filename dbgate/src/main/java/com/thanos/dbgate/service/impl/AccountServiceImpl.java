@@ -48,7 +48,8 @@ public class AccountServiceImpl implements IAccount {
     }
 
     public UserMapper userLonginByPhone(String phoneNumber, String password) {
-       return accountDAO.queryUser(phoneNumber, password);
+       UserMapper userInfo =  accountDAO.queryUser(phoneNumber, password);
+       return userInfo;
     }
 
 

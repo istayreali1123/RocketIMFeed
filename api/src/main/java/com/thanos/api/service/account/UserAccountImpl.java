@@ -1,6 +1,7 @@
 package com.thanos.api.service.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.thanos.account.intereface.Login;
 import com.thanos.account.intereface.Register;
 import com.thanos.common.exception.UserRegisterException;
 import com.thanos.common.pojo.UserMapper;
@@ -15,6 +16,9 @@ public class UserAccountImpl implements UserAccount {
 
     @Reference
     Register registerHandler;
+
+    @Reference
+    Login loginHandler;
 
     public UserMapper registerByPhoneNumber(String phoneNumber, String password, String nickname,
                                             String userIcon, String verifyCode) throws UserRegisterException {
@@ -50,11 +54,12 @@ public class UserAccountImpl implements UserAccount {
         password = MD5Util.md5(MD5Util.md5(password));
 
         // step2: verify the passpord
-        //UserMapper userInfo =  loginHandler.userLonginByPhone(phone, password);
+        UserMapper userInfo =  loginHandler.userLonginByPhone(phone, password);
 
         //step3. activate the user session, generate the bduss
-
-        return null;
+        userInfo.setIsOnline('1');
+        userInfo.setBudss("J5UGpheTlFWE1oUFVobkhyclZacGdWQU5jekllYURscmJXS0tUaTRQTlM5UlJiQVFBQUFBJCQAAAAAAAAAAAEAAAAlD3YfbG92ZW9mZ2hvc3QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFJo7VpSaO1aVD");
+        return userInfo;
     }
 
     public void verifyPhoneNumber(String phoneNumber) throws

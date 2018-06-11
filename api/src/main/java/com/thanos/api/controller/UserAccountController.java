@@ -2,15 +2,17 @@ package com.thanos.api.controller;
 
 import com.thanos.common.BaseResponse;
 import com.thanos.api.service.account.UserAccount;
+import com.thanos.common.exception.UserLoginException;
 import com.thanos.common.exception.UserRegisterException;
 import com.thanos.common.pojo.UserMapper;
 import com.thanos.dbgate.service.impl.AccountServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 /**
  * Created by wangjialong on 6/3/18.
@@ -18,7 +20,7 @@ import java.util.logging.Logger;
 @RestController
 public class UserAccountController extends AbstractController {
 
-    private static Logger logger = Logger.getLogger(UserAccountController.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(UserAccountController.class);
 
     UserAccount userAccountHandler;
 
@@ -36,11 +38,11 @@ public class UserAccountController extends AbstractController {
             resp.setData(data);
             resp.setCode("0");
         } catch (UserRegisterException e) {
+            logger.error("exception:", e);
             String code = e.getCode();
             resp.setCode(code);
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.warning("error: " + e.getCause());
+            logger.error("exception:", e);
             resp.setCode("-1");
         }
         return resp;
@@ -67,8 +69,12 @@ public class UserAccountController extends AbstractController {
             RespObj data = wrapResponse(userInfo);
             resp.setData(data);
             resp.setCode("0");
+        } catch (UserLoginException e) {
+            String code = e.getCode();
+            resp.setCode(code);
         } catch (Exception e) {
-
+            e.printStackTrace();
+            resp.setCode("-1");
         }
         return resp;
     }
