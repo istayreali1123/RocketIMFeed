@@ -14,6 +14,7 @@
         <module>account</module>
         <module>common</module>
         <module>dbgate</module>
+        <module>session</module>
     </modules>
 
     <dependencies>
