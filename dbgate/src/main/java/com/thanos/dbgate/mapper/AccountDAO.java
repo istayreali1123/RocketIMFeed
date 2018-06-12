@@ -1,5 +1,6 @@
 package com.thanos.dbgate.mapper;
 
+import com.thanos.common.pojo.UserIdAllocMapper;
 import com.thanos.common.pojo.UserMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,10 @@ public interface AccountDAO {
     int addAccount(@Param("user") UserMapper user) throws Exception;
 
     UserMapper queryUser(@Param("phoneNumber")String phoneNumber, @Param("password") String password);
+
+    long uuidAlloc(@Param("uuidAlloc") UserIdAllocMapper uuidAlloc);
+
+    UserIdAllocMapper queryUidByPhone(@Param("phone") String phone);
+
+
 }

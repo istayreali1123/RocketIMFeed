@@ -8,5 +8,9 @@ import com.thanos.common.pojo.UserMapper;
  */
 public interface Register {
 
+    long userIdAlloc(String osid) throws UserRegisterException.UserIdAllocException;
+
     void addUser(UserMapper userInfo) throws UserRegisterException;
+
+    long queryUserIdByPhone(String phone);
 }

@@ -1,5 +1,6 @@
 package com.thanos.account.intereface;
 
+import com.thanos.common.exception.UserLoginException;
 import com.thanos.common.pojo.UserMapper;
 
 /**
@@ -7,5 +8,6 @@ import com.thanos.common.pojo.UserMapper;
  */
 public interface Login {
 
-    public UserMapper userLonginByPhone(String phone, String password);
+    UserMapper userLonginByPhone(String phone, String password)
+            throws UserLoginException.LoginAuthException;
 }

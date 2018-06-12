@@ -3,6 +3,7 @@ package com.thanos.dbgate.service.impl;
 
 import com.thanos.common.BaseResponse;
 import com.thanos.common.exception.UserRegisterException;
+import com.thanos.common.pojo.UserIdAllocMapper;
 import com.thanos.common.pojo.UserMapper;
 import com.thanos.dbgate.mapper.AccountDAO;
 import com.thanos.dbgate.service.IAccount;
@@ -47,6 +48,20 @@ public class AccountServiceImpl implements IAccount {
     }
 
     public UserMapper userLonginByPhone(String phoneNumber, String password) {
-       return accountDAO.queryUser(phoneNumber, password);
+       UserMapper userInfo =  accountDAO.queryUser(phoneNumber, password);
+       return userInfo;
     }
+
+
+    public long allocUserId(UserIdAllocMapper uuidMapper)
+            throws UserRegisterException.UserIdAllocException {
+       accountDAO.uuidAlloc(uuidMapper);
+       return uuidMapper.getId();
+    }
+
+    public UserIdAllocMapper queryUserIdByPhone(String phone) {
+       return accountDAO.queryUidByPhone(phone);
+    }
+
+
 }

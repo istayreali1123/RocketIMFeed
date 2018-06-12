@@ -35,10 +35,12 @@
 
     <!-- 和本地bean一样实现服务 -->
     <bean id="addUserService" class="com.thanos.account.service.UserRegisterImpl"/>
+    <bean id="userLoginService" class="com.thanos.account.service.UserLoginImpl"/>
 
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.thanos.account.intereface.Register" ref="addUserService"/>
+    <dubbo:service interface="com.thanos.account.intereface.Login" ref="userLoginService" stub="com.thanos.account.stub.UserLoginStub"/>
 
 
 </beans>

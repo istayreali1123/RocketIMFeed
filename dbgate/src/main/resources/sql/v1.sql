@@ -13,3 +13,11 @@ CREATE TABLE `account` (
   UNIQUE KEY `uuid` (`uuid`),
   UNIQUE KEY `phoneNumber` (`phoneNumber`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `uuid_alloc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT comment "user id alloced",
+  `osid` varchar(256) not null comment "os id of platform",
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `osid` (`osid`)
+)ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;

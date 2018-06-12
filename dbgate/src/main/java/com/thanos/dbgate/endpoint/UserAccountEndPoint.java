@@ -1,6 +1,7 @@
 package com.thanos.dbgate.endpoint;
 
 import com.thanos.common.exception.UserRegisterException;
+import com.thanos.common.pojo.UserIdAllocMapper;
 import com.thanos.common.pojo.UserMapper;
 import com.thanos.dbgate.service.IAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,12 @@ public class UserAccountEndPoint {
         instance.acountEntity.userRegister(userInfo);
     }
 
+    public static long userUUidgenerate(UserIdAllocMapper uuidMapper) {
+        return instance.acountEntity.allocUserId(uuidMapper);
+    }
+
+    public static UserIdAllocMapper queyUserIdByPhone(String phone) {
+        return instance.acountEntity.queryUserIdByPhone(phone);
+    }
 
 }
