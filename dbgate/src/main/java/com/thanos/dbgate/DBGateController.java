@@ -1,6 +1,7 @@
 package com.thanos.dbgate;
 
 import com.thanos.common.utils.SpringContextUtil;
+import com.thanos.dbgate.service.IAccount;
 import com.thanos.dbgate.service.impl.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,7 +17,7 @@ public class DBGateController implements Runnable {
     public SpringContextUtil springContextUtil;
 
     @Autowired
-    private AccountServiceImpl accountService;
+    private IAccount accountService;
 
     private boolean running = false;
     private Thread thread;

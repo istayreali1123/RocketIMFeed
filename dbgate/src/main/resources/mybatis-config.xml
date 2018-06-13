@@ -32,5 +32,6 @@
     </typeAliases>
     <mappers>
         <mapper resource="mapper/AccountMapper.xml" />
+        <mapper resource="mapper/FeedMapper.xml" />
     </mappers>
 </configuration>

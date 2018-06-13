@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!--private String uuid;-->
+<!--private String userName;-->
+<!--private String password;-->
+<!--private String emailAddress;-->
+<!--private String nickName;-->
+<!--private Date lastUpdateTime;-->
+<!--private String avatarURL;-->
+<!--private String phoneNnumber;-->
+
+<mapper namespace="com.thanos.dbgate.mapper.FeedDAO">
+
+    <!--<resultMap id="UserResult" type="user">-->
+    <!--<result column="uuid" jdbcType="VARCHAR" property="uuid" />-->
+    <!--<result column="userName" jdbcType="VARCHAR" property="userName" />-->
+    <!--<result column="password" jdbcType="VARCHAR" property="password" />-->
+    <!--<result column="emailAddress" jdbcType="VARCHAR" property="emailAddress" />-->
+    <!--<result column="nickName" jdbcType="VARCHAR" property="nickName" />-->
+    <!--<result column="lastUpdateTime" jdbcType="DATE" property="lastUpdateTime" />-->
+    <!--<result column="avatarURL" jdbcType="VARCHAR" property="avatarURL" />-->
+    <!--<result column="phoneNnumber" jdbcType="VARCHAR" property="phoneNnumber" />-->
+    <!--</resultMap>-->
+
+    <resultMap id="feedEntity" type="com.thanos.common.pojo.FeedMapper">
+        <result column="feedId" jdbcType="INTEGER" property="feedId" javaType="long"/>
+        <result column="authorId" jdbcType="INTEGER" property="authorId" javaType="long"/>
+        <result column="text" jdbcType="VARCHAR" property="text" javaType="String"/>
+        <result column="mediaLink" jdbcType="VARCHAR" property="mediaLink" javaType="String"
+                typeHandler="com.thanos.dbgate.typeHandler.FeedTypeHandler"/>
+        <result column="commentNum" jdbcType="INTEGER" property="commentNum" />
+        <result column="likeNum" jdbcType="INTEGER" property="likeNum" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="addFeed" useGeneratedKeys="true" keyProperty="feed.feedId" parameterType="com.thanos.common.pojo.FeedMapper" >
+        insert into
+        feed(authorId, text, mediaLink, commentNum, likeNum)
+        VALUES (#{feed.authorId}, #{feed.text}, #{feed.mediaLink,typeHandler=com.thanos.dbgate.typeHandler.FeedTypeHandler}, #{feed.commentNum}, #{feed.likeNum})
+    </insert>
+
+    <select id="queryFeed" resultMap="feedEntity" parameterType="long" >
+        select feedId, authorId, text, mediaLink, commentNum, likeNum, createTime
+        from feed where feedId=#{feedId}
+    </select>
+
+
+</mapper>

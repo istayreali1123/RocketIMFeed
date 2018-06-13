@@ -5,6 +5,7 @@ import sun.jvm.hotspot.debugger.linux.sparc.LinuxSPARCThreadContext;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class FeedMapper implements Serializable {
 
     public int likeNum = 0;
 
-    public long createTime = System.currentTimeMillis();
+    public Date createTime = new Date();
 
     public void setFeedId(long feedId) {
         this.feedId = feedId;
@@ -68,7 +69,7 @@ public class FeedMapper implements Serializable {
         return likeNum;
     }
 
-    public long getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
@@ -88,7 +89,7 @@ public class FeedMapper implements Serializable {
         this.likeNum = likeNum;
     }
 
-    public void setCreateTime(int createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
