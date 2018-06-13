@@ -1,4 +1,4 @@
-package com.thanos.session.redis;
+package com.thanos.session.core;
 
 public class SessionHandlerValue {
 }
