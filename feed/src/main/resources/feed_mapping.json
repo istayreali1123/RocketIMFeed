@@ -1,0 +1,44 @@
+// create mapping of our index
+//post http://127.0.0.1:9200/thanos/feed/
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 2
+  },
+  "mappings" : {
+    "feed":{
+      "dynamic":false,
+      "properties":{
+        "id":{
+          "store":"yes",
+          "type":"integer"
+        },
+        "authorId":{
+          "store":"yes",
+          "type":"integer"
+        },
+        "text":{
+          "analyzer":"ik",
+          "store":"yes",
+          "type":"string"
+        },
+        "mediaLink":{
+
+        },
+        "commentNum":{
+          "store":"yes",
+          "type":"integer"
+        },
+        "likeNum":{
+          "store":"yes",
+          "type":"integer"
+        },
+        "createTime":{
+          "store":"yes",
+          "type":"integer"
+        }
+      }
+    }
+  }
+
+}
