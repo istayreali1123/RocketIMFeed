@@ -35,16 +35,16 @@ public class RedisCache implements DataCache {
         return dataCache.setnx(key, value);
     }
 
-    public Long expire(String key) {
-        return dataCache.expire(key);
+    public Long expire(String key, int seconds) {
+        return dataCache.expire(key, seconds);
     }
 
     public byte[] get(String key) {
         return dataCache.get(key);
     }
 
-    public long remove(String key) {
-        return dataCache.remove(key);
+    public Long delete(String key) {
+        return dataCache.delete(key);
     }
 
     private void initialize() {

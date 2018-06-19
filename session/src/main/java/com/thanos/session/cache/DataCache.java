@@ -10,12 +10,12 @@ public interface DataCache {
     Long setnx(String key, byte[] value);
 
     //expire one key
-    Long expire(String key);
+    Long expire(String key, int seconds);
 
     //get one key
     byte[] get(String key);
 
-    //remove key
-    long remove(String key);
+    //delete key
+    Long delete(String key);
 
 }
