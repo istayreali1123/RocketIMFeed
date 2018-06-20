@@ -2,10 +2,13 @@ package com.thanos.session.cache;
 
 import com.thanos.session.constants.RedisConstants;
 import com.thanos.session.constants.SessionConstants;
+import com.thanos.session.utils.RedisCacheUtil;
+import com.thanos.session.utils.RedisClusterCacheUtil;
 import org.apache.catalina.Session;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 
 import javax.print.attribute.standard.NumberUp;
@@ -67,6 +70,11 @@ public class RedisCache implements DataCache {
         //get jedis nodes
         Collection<? extends Serializable> redisNodes = getJedisNodes(hosts, clusterEnabled);
 
+        if (clusterEnabled) {
+            dataCache = new RedisClusterCacheUtil((Set<HostAndPort>)redisNodes, password, timeout, getPoolConfig(properties));
+        }else {
+            dataCache = new RedisCacheUtil(((List<String>)redisNodes).get(0),  Integer.parseInt(((List<String>)redisNodes).get(1)), password, dataBase, timeout, getPoolConfig(properties));
+        }
     }
 
     private Properties loadProperties() {
@@ -120,6 +128,40 @@ public class RedisCache implements DataCache {
 
         }
         return null;
+    }
+
+    /**
+     * To get jedis pool configuration
+     *
+     * @param properties
+     * @return
+     */
+    private JedisPoolConfig getPoolConfig(Properties properties) {
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        int maxActive = Integer.parseInt(properties.getProperty(RedisConstants.MAX_ACTIVE, RedisConstants.DEFAULT_MAX_ACTIVE_VALUE));
+        poolConfig.setMaxTotal(maxActive);
+//
+        boolean testOnBorrow = Boolean.parseBoolean(properties.getProperty(RedisConstants.TEST_ONBORROW, RedisConstants.DEFAULT_TEST_ONBORROW_VALUE));
+        poolConfig.setTestOnBorrow(testOnBorrow);
+//
+        boolean testOnReturn = Boolean.parseBoolean(properties.getProperty(RedisConstants.TEST_ONRETURN, RedisConstants.DEFAULT_TEST_ONRETURN_VALUE));
+        poolConfig.setTestOnReturn(testOnReturn);
+//
+        int maxIdle = Integer.parseInt(properties.getProperty(RedisConstants.MAX_ACTIVE, RedisConstants.DEFAULT_MAX_ACTIVE_VALUE));
+        poolConfig.setMaxIdle(maxIdle);
+//
+        int minIdle = Integer.parseInt(properties.getProperty(RedisConstants.MIN_IDLE, RedisConstants.DEFAULT_MIN_IDLE_VALUE));
+        poolConfig.setMinIdle(minIdle);
+//
+        boolean testWhileIdle = Boolean.parseBoolean(properties.getProperty(RedisConstants.TEST_WHILEIDLE, RedisConstants.DEFAULT_TEST_WHILEIDLE_VALUE));
+        poolConfig.setTestWhileIdle(testWhileIdle);
+//
+        int testNumPerEviction = Integer.parseInt(properties.getProperty(RedisConstants.TEST_NUMPEREVICTION, RedisConstants.DEFAULT_TEST_NUMPEREVICTION_VALUE));
+        poolConfig.setNumTestsPerEvictionRun(testNumPerEviction);
+//
+//        long timeBetweenEviction = Long.parseLong(properties.getProperty(RedisConstants.TIME_BETWEENEVICTION, RedisConstants.DEFAULT_TIME_BETWEENEVICTION_VALUE));
+//        poolConfig.setTimeBetweenEvictionRunsMillis(timeBetweenEviction);
+        return poolConfig;
     }
 
 }
