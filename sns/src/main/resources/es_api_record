@@ -1,0 +1,13 @@
+groovy 脚本更新es list 数据
+post http://127.0.0.1:9200/follows/follower/5/_update
+{
+    "script" : {
+       "inline": "ctx._source.followers.add(params.follower)",
+       "params" : {
+          "follower" : "7"
+       }
+   },
+   "upsert": {
+   	    "followers": [22]
+   }
+}

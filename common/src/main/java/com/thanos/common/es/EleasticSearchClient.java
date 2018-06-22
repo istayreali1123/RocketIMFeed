@@ -11,6 +11,8 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.Node;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 import java.net.InetAddress;
@@ -18,6 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static org.elasticsearch.script.Script.DEFAULT_SCRIPT_LANG;
+import static org.elasticsearch.script.Script.DEFAULT_SCRIPT_TYPE;
 
 /**
  * Created by wangjialong on 6/13/18.
@@ -27,7 +32,7 @@ public class EleasticSearchClient {
     private static TransportClient client = null;
 
     private static final String INDEX = "thanos";
-    private static final String TYPE = "feed";
+    private static final String TYPE = "sns";
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -66,12 +71,25 @@ public class EleasticSearchClient {
 
     }
 
-    public static void createDocument(Object data) {
+    public static void createDocument(Object data, String id) {
         try {
             String source = MAPPER.writeValueAsString(data);
             Map<String, Object> obj = ObjectTransform.object2Map(data);
-            ActionResponse response = client.prepareIndex(INDEX, TYPE).setSource(obj).get();
+            ActionResponse response = client.prepareIndex(INDEX, TYPE, id).setSource(obj).get();
             ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void createOrUpdateDocumentByMap(String index, String type , String idOrCode,
+                                                   Map<String, Object> params, Map<String, Object> upsert,
+                                                   String id) {
+        try {
+            ActionResponse response = client.prepareUpdate(index, type, id)
+                    .setScript(new Script(DEFAULT_SCRIPT_TYPE, DEFAULT_SCRIPT_LANG,
+                            idOrCode, params)).setUpsert(upsert).get();
         } catch (Exception e) {
             e.printStackTrace();
         }

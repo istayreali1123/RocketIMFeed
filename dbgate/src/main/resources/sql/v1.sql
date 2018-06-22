@@ -25,11 +25,23 @@ CREATE TABLE `uuid_alloc` (
 
 CREATE TABLE `feed` (
   `feedId` int(11) NOT NULL AUTO_INCREMENT,
-  `authorId` int(11) NOT NULL comment 'author id of the feed',
-  `text` VARCHAR(1024) NOT NULL DEFAULT "" comment 'text content of the feed',
+  `authorId` int(11) NOT NULL comment 'author id of the sns',
+  `text` VARCHAR(1024) NOT NULL DEFAULT "" comment 'text content of the sns',
   `mediaLink` TEXT not null comment 'media link such as image or video',
-  `commentNum` int(11) not null default 0 comment 'comment number of the feed',
-  `likeNum` int(11) not null default 0 comment 'like number of the feed',
+  `commentNum` int(11) not null default 0 comment 'comment number of the sns',
+  `likeNum` int(11) not null default 0 comment 'like number of the sns',
   `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`feedId`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `follows` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fromUid` int(11) NOT NULL COMMENT 'from user id',
+  `toUid` int(11) NOT NULL COMMENT 'to user id',
+  `direction` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'relation direction',
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `from_to_direction` (`fromUid`,`toUid`,`direction`),
+  KEY `from_to` (`fromUid`,`toUid`,`createTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

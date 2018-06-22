@@ -25,6 +25,12 @@ public class FeedMapper implements Serializable {
         this.mediaLink = mediaLink;
     }
 
+    public FeedMapper(long authorId, String text,  List<String> mediaLink) {
+        this.authorId = authorId;
+        this.text = text;
+        this.mediaLink = mediaLink;
+    }
+
     public long authorId;
 
     public String text;

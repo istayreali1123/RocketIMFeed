@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!--private String uuid;-->
+<!--private String userName;-->
+<!--private String password;-->
+<!--private String emailAddress;-->
+<!--private String nickName;-->
+<!--private Date lastUpdateTime;-->
+<!--private String avatarURL;-->
+<!--private String phoneNnumber;-->
+
+<mapper namespace="com.thanos.dbgate.mapper.FollowDAO">
+
+    <!--<resultMap id="UserResult" type="user">-->
+    <!--<result column="uuid" jdbcType="VARCHAR" property="uuid" />-->
+    <!--<result column="userName" jdbcType="VARCHAR" property="userName" />-->
+    <!--<result column="password" jdbcType="VARCHAR" property="password" />-->
+    <!--<result column="emailAddress" jdbcType="VARCHAR" property="emailAddress" />-->
+    <!--<result column="nickName" jdbcType="VARCHAR" property="nickName" />-->
+    <!--<result column="lastUpdateTime" jdbcType="DATE" property="lastUpdateTime" />-->
+    <!--<result column="avatarURL" jdbcType="VARCHAR" property="avatarURL" />-->
+    <!--<result column="phoneNnumber" jdbcType="VARCHAR" property="phoneNnumber" />-->
+    <!--</resultMap>-->
+
+    <resultMap id="followEntity" type="com.thanos.common.pojo.RelationMapper">
+        <result column="id" jdbcType="BIGINT" property="id" javaType="long"/>
+        <result column="fromUid" jdbcType="BIGINT" property="fromUid" javaType="long"/>
+        <result column="toUid" jdbcType="BIGINT" property="toUid" javaType="long"/>
+        <result column="direction" jdbcType="TINYINT" property="direction" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="addFollow" useGeneratedKeys="true" keyProperty="relation.id" parameterType="com.thanos.common.pojo.RelationMapper" >
+        insert into
+        follows(fromUid, toUid, direction)
+        VALUES (#{relation.fromUid}, #{relation.toUid}, #{relation.direction})
+    </insert>
+
+    <select id="queryByUserId" resultMap="followEntity" >
+        select id, fromUid, toUid, direction, createTime
+        from follows where fromUid=#{0} and toUid=#{1}
+    </select>
+
+    <update id="updateDirection" >
+        update follows set direction=#{direction} where fromUid=#{fromUserId} and toUid=#{toUserId}
+    </update>
+
+
+</mapper>

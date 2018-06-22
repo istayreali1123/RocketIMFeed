@@ -16,10 +16,14 @@ public class DBGateStartup {
     static {
 //        context = new ClassPathXmlApplicationContext(
 //                "classpath:spring-dubbo.xml", "classpath:applicationContext.xml");
+        load();
+        //ctx.start();
+    }
+
+    public static void load() {
         context = new ClassPathXmlApplicationContext(
                 "classpath:applicationContext.xml");
         context.start();
-        //ctx.start();
     }
 
     public static void main(String[] args) {

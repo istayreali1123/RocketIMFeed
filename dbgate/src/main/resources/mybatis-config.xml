@@ -33,5 +33,6 @@
     <mappers>
         <mapper resource="mapper/AccountMapper.xml" />
         <mapper resource="mapper/FeedMapper.xml" />
+        <mapper resource="mapper/FollowMapper.xml" />
     </mappers>
 </configuration>
