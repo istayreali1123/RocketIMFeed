@@ -8,6 +8,7 @@ import com.thanos.common.pojo.UserMapper;
 import com.thanos.dbgate.service.impl.AccountServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ public class UserAccountController extends AbstractController {
 
     private static Logger logger = LoggerFactory.getLogger(UserAccountController.class);
 
+    @Autowired
     UserAccount userAccountHandler;
 
     @RequestMapping("/user/register")
@@ -32,7 +34,6 @@ public class UserAccountController extends AbstractController {
 
         BaseResponse.ResponseBody<RespObj> resp = new BaseResponse.ResponseBody();
         try {
-            userAccountHandler = (UserAccount) context.getBean("userAccountHandler");
             UserMapper userInfo = userAccountHandler.registerByPhoneNumber(phone, password, name, icon, "");
             RespObj data = wrapResponse(userInfo);
             resp.setData(data);
@@ -61,10 +62,9 @@ public class UserAccountController extends AbstractController {
 
     @RequestMapping("/user/login")
     public BaseResponse.ResponseBody<RespObj> login(@RequestParam(value = "phone") String phone,
-                                                    @RequestParam(value = "passpwod") String password) {
+                                                    @RequestParam(value = "password") String password) {
         BaseResponse.ResponseBody<RespObj> resp = new BaseResponse.ResponseBody();
         try {
-            userAccountHandler = (UserAccount) context.getBean("userAccountHandler");
             UserMapper userInfo = userAccountHandler.userLonginByPhone(phone, password);
             RespObj data = wrapResponse(userInfo);
             resp.setData(data);
