@@ -7,6 +7,10 @@ public class UserRelationException extends RuntimeException {
 
     public String code = "1300";
 
+    public String getCode() {
+        return code;
+    }
+
     public static class UserAlreadyFollowException extends UserRelationException {
 
         public UserAlreadyFollowException() {

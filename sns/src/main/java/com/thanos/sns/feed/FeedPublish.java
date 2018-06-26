@@ -1,15 +1,16 @@
-package com.thanos.sns;
+package com.thanos.sns.feed;
 
 import com.thanos.common.es.EleasticSearchClient;
 import com.thanos.common.pojo.FeedMapper;
 import com.thanos.dbgate.endpoint.FeedEndPoint;
+import com.thanos.sns.service.intereface.Feed;
 
 /**
  * Created by wangjialong on 6/13/18.
  */
-public class FeedPublish {
+public class FeedPublish implements Feed {
 
-    public void pubFeedToElasticSearch(FeedMapper feedInfo) {
+    public void feedPublish(FeedMapper feedInfo) {
         //1. add sns to storage
         FeedEndPoint.addFeed(feedInfo);
 

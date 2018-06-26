@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository("feedDaoMapper")
 public interface FeedDAO {
 
-    int addFeed(@Param("sns") FeedMapper user) throws Exception;
+    int addFeed(@Param("feed") FeedMapper user) throws Exception;
 
     FeedMapper queryFeed(@Param("feedId") long feedId) throws Exception;
 }

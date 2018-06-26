@@ -7,9 +7,13 @@ public class FeedPublishException extends RuntimeException {
 
     public String code= "1200";
 
-    public static class feddStorageException extends FeedPublishException {
+    public String getCode() {
+        return code;
+    }
 
-        public feddStorageException() {
+    public static class feedStorageException extends FeedPublishException {
+
+        public feedStorageException() {
             code = "1201";
         }
     }

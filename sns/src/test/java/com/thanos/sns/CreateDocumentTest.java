@@ -3,7 +3,8 @@ package com.thanos.sns;
 import com.thanos.common.es.EleasticSearchClient;
 import com.thanos.common.pojo.FeedMapper;
 import com.thanos.dbgate.DBGateStartup;
-import com.thanos.sns.relation.Follow;
+import com.thanos.sns.feed.FeedPublish;
+import com.thanos.sns.relation.FollowRelation;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,12 +37,12 @@ public class CreateDocumentTest {
         FeedMapper feedInfo = new FeedMapper(2, "Hello",  mediaLink);
         DBGateStartup.load();
         FeedPublish obj = new FeedPublish();
-        obj.pubFeedToElasticSearch(feedInfo);
+        obj.feedPublish(feedInfo);
     }
 
     @Test
     public void testAddFollow() {
-        Follow obj = new Follow();
+        FollowRelation obj = new FollowRelation();
         obj.userFollow(105001676, 105003488);
     }
 }

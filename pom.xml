@@ -14,7 +14,7 @@
         <module>account</module>
         <module>common</module>
         <module>dbgate</module>
-        <module>feed</module>
+        <module>sns</module>
         <module>session</module>
     </modules>
 

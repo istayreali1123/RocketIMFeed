@@ -1,5 +1,6 @@
 package com.thanos.common.es;
 
+import com.thanos.common.exception.FeedPublishException;
 import com.thanos.common.utils.ObjectTransform;
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
@@ -32,7 +33,7 @@ public class EleasticSearchClient {
     private static TransportClient client = null;
 
     private static final String INDEX = "thanos";
-    private static final String TYPE = "sns";
+    private static final String TYPE = "feed";
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -76,9 +77,9 @@ public class EleasticSearchClient {
             String source = MAPPER.writeValueAsString(data);
             Map<String, Object> obj = ObjectTransform.object2Map(data);
             ActionResponse response = client.prepareIndex(INDEX, TYPE, id).setSource(obj).get();
-            ;
         } catch (Exception e) {
             e.printStackTrace();
+            throw new FeedPublishException();
         }
 
     }
