@@ -6,7 +6,7 @@
 	<groupId>com.baidu.thanos</groupId>
 	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>api</name>
 	<description>Demo project for Spring Boot</description>
@@ -48,6 +48,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 去除springboot中自带的tomcat容器依赖，使用自己部署的tomcat容器 -->
+			<exclusions>
+			<exclusion>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-tomcat</artifactId>
+			</exclusion>
+			</exclusions>
+			<!--<scope>provided</scope>-->
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
@@ -81,6 +89,27 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.9.5</version>
 		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>7.0.88</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>javax</groupId>-->
+			<!--<artifactId>javaee-api</artifactId>-->
+			<!--<version>7.0</version>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
 	</dependencies>
 
 	<build>
