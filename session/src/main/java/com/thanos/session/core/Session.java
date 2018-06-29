@@ -25,7 +25,7 @@ public class Session extends StandardSession {
     }
 
     //重置
-    private void resetDirtyTracking() {
+    public void resetDirtyTracking() {
         this.changedAttributes = new HashMap<String, Object>();
         dirty = false;
     }
@@ -65,4 +65,28 @@ public class Session extends StandardSession {
     public static void setManualDirtyTrackingAttributeKey(String manualDirtyTrackingAttributeKey) {
         Session.manualDirtyTrackingAttributeKey = manualDirtyTrackingAttributeKey;
     }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+    @Override
+    public void setAttribute(String name, Object value) {
+        if (manualDirtyTrackingSupportEnabled && manualDirtyTrackingAttributeKey.equals(name)) {
+            dirty = true;
+            return;
+        }
+        Object oldValue = getAttribute(name);
+        super.setAttribute(name, value);
+
+        if ((value != null || oldValue != null) && (oldValue != null && value == null || oldValue == null && value != null
+        || !value.getClass().isInstance(oldValue) || !value.equals(oldValue))) {
+            //todo
+           // if (this.manager instanceof SessionManager && (SessionManager)this.manager.getsave)
+        }
+    }
+
+
 }
