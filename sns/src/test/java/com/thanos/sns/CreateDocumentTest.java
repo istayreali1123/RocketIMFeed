@@ -40,9 +40,9 @@ public class CreateDocumentTest {
         obj.feedPublish(feedInfo);
     }
 
-    @Test
-    public void testAddFollow() {
-        FollowRelation obj = new FollowRelation();
-        obj.userFollow(105001676, 105003488);
-    }
+//    @Test
+//    public void testAddFollow() {
+//        FollowRelation obj = new FollowRelation();
+//        obj.userFollow(105001676, 105003488);
+//    }
 }
