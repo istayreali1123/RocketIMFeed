@@ -40,9 +40,4 @@ public class RelationController extends AbstractController {
         return resp;
     }
 
-    @RequestMapping("/hello")
-    public String hello() {
-        return "hello";
-    }
-
 }
