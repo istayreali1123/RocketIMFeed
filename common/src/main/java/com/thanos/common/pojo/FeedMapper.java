@@ -1,5 +1,6 @@
 package com.thanos.common.pojo;
 
+import com.thanos.common.annotations.ToMap;
 import org.springframework.context.annotation.Lazy;
 import sun.jvm.hotspot.debugger.linux.sparc.LinuxSPARCThreadContext;
 
@@ -18,14 +19,14 @@ public class FeedMapper implements Serializable {
     public FeedMapper() {
     }
 
-    public FeedMapper(long feedId, long authorId, String text,  List<String> mediaLink) {
+    public FeedMapper(long feedId, long authorId, String text,  List<Resource> mediaLink) {
         this.feedId = feedId;
         this.authorId = authorId;
         this.text = text;
         this.mediaLink = mediaLink;
     }
 
-    public FeedMapper(long authorId, String text,  List<String> mediaLink) {
+    public FeedMapper(long authorId, String text,  List<Resource> mediaLink) {
         this.authorId = authorId;
         this.text = text;
         this.mediaLink = mediaLink;
@@ -33,15 +34,27 @@ public class FeedMapper implements Serializable {
 
     public long authorId;
 
+    public FeedMapper(long feedId, long authorId, String text, List<Resource> mediaLink,
+                      int commentNum, int likeNum, long createTime) {
+        this.feedId = feedId;
+        this.authorId = authorId;
+        this.text = text;
+        this.mediaLink = mediaLink;
+        this.commentNum = commentNum;
+        this.likeNum = likeNum;
+        this.createTime = createTime;
+    }
+
     public String text;
 
-    public List<String> mediaLink = new ArrayList();
+    @ToMap
+    public List<Resource> mediaLink = new ArrayList();
 
     public int commentNum = 0;
 
     public int likeNum = 0;
 
-    public Date createTime = new Date();
+    public long createTime = new Date().getTime();
 
     public void setFeedId(long feedId) {
         this.feedId = feedId;
@@ -63,7 +76,7 @@ public class FeedMapper implements Serializable {
         return text;
     }
 
-    public List<String> getMediaLink() {
+    public List<Resource> getMediaLink() {
         return mediaLink;
     }
 
@@ -75,7 +88,7 @@ public class FeedMapper implements Serializable {
         return likeNum;
     }
 
-    public Date getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
@@ -83,7 +96,7 @@ public class FeedMapper implements Serializable {
         this.text = text;
     }
 
-    public void setMediaLink(List<String> mediaLink) {
+    public void setMediaLink(List<Resource> mediaLink) {
         this.mediaLink = mediaLink;
     }
 
@@ -95,9 +108,51 @@ public class FeedMapper implements Serializable {
         this.likeNum = likeNum;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
+    public static class Resource implements Serializable {
 
+        // 暂时不考虑多码率多资源， 需要在加一个append 字段
+        public String resourceUrl;
+
+        public String resourceType;
+
+        public String thumbUrl;
+
+        public Resource() {
+        }
+
+        public Resource(String resourceUrl, String resourceType, String thumbUrl) {
+            this.resourceUrl = resourceUrl;
+            this.resourceType = resourceType;
+            this.thumbUrl = thumbUrl;
+        }
+
+        public void setResourceUrl(String resourceUrl) {
+            this.resourceUrl = resourceUrl;
+        }
+
+        public void setResourceType(String resourceType) {
+            this.resourceType = resourceType;
+        }
+
+        public void setThumbUrl(String thumbUrl) {
+            this.thumbUrl = thumbUrl;
+        }
+
+        public String getResourceUrl() {
+
+            return resourceUrl;
+        }
+
+        public String getResourceType() {
+            return resourceType;
+        }
+
+        public String getThumbUrl() {
+            return thumbUrl;
+        }
+    }
 }

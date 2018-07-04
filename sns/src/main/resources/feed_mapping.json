@@ -3,38 +3,57 @@
     "number_of_shards": 1,
     "number_of_replicas": 2
   },
-  "mappings" : {
-    "feed":{
-      "dynamic":false,
-      "properties":{
-        "id":{
-          "store":"true",
-          "type":"integer"
+  "mappings": {
+    "feed": {
+      "dynamic": "false",
+      "properties": {
+        "authorId": {
+          "type": "integer",
+          "store": true
         },
-        "authorId":{
-          "store":"true",
-          "type":"integer"
+        "commentNum": {
+          "type": "integer",
+          "store": true
         },
-        "text":{
-          "analyzer":"standard",
-          "store":"true",
-          "type":"text"
+        "createTime": {
+          "type": "text",
+          "store": true,
+          "fielddata": true
+        },
+        "feedId": {
+          "type": "long",
+          "store": true
+        },
+        "id": {
+          "type": "integer",
+          "store": true
+        },
+        "likeNum": {
+          "type": "integer",
+          "store": true
+        },
+        "text": {
+          "type": "text",
+          "store": true,
+          "analyzer": "standard"
         },
         "mediaLink":[
-
-        ],
-        "commentNum":{
-          "store":"true",
-          "type":"integer"
-        },
-        "likeNum":{
-          "store":"true",
-          "type":"integer"
-        },
-        "createTime":{
-          "store":"true",
-          "type":"text"
-        }
+          {
+            "properties": {
+              "resourceUrl": {
+                "type": "keyword"
+              },
+              "resourceType": {
+                "type": "keyword"
+              },
+              "thumbUrl": {
+                "type": "keyword"
+              }
+            }
+          }
+        ]
       }
     }
   }
+}
+

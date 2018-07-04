@@ -40,9 +40,13 @@
 
     <bean id="userRelationService" class="com.thanos.sns.relation.FollowRelation" />
 
+    <bean id="pullFeedService" class="com.thanos.sns.feed.FeedPull" />
+
 
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.thanos.sns.service.intereface.Feed" ref="pubFeedService"/>
+    <dubbo:service group="pub" interface="com.thanos.sns.service.intereface.Feed" ref="pubFeedService"/>
     <dubbo:service interface="com.thanos.sns.service.intereface.Relation" ref="userRelationService"/>
+    <dubbo:service group="pull" interface="com.thanos.sns.service.intereface.Feed" ref="pullFeedService"
+                   stub="com.thanos.sns.stub.FeedPullStub"/>
 
 </beans>

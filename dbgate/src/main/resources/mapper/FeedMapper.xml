@@ -28,7 +28,7 @@
         <result column="feedId" jdbcType="INTEGER" property="feedId" javaType="long"/>
         <result column="authorId" jdbcType="INTEGER" property="authorId" javaType="long"/>
         <result column="text" jdbcType="VARCHAR" property="text" javaType="String"/>
-        <result column="mediaLink" jdbcType="VARCHAR" property="mediaLink" javaType="String"
+        <result column="mediaLink" jdbcType="VARCHAR" property="mediaLink"
                 typeHandler="com.thanos.dbgate.typeHandler.FeedTypeHandler"/>
         <result column="commentNum" jdbcType="INTEGER" property="commentNum" />
         <result column="likeNum" jdbcType="INTEGER" property="likeNum" />

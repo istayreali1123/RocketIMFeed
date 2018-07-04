@@ -34,6 +34,7 @@
 
     <dubbo:reference id="feedPub" interface="com.thanos.sns.service.intereface.Feed" check="false" async="true">
         <dubbo:method name="feedPublish" timeout="10000"/>
+        <dubbo:method name="feedPull" timeout="10000" />
     </dubbo:reference>
 
 </beans>

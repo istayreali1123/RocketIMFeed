@@ -1,7 +1,11 @@
 package com.thanos.common.utils;
 
+import com.thanos.common.annotations.ToMap;
+
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,7 +25,17 @@ public class ObjectTransform {
         }
         for (Field field: fields) {
             field.setAccessible(true);
-            map.put(field.getName(), field.get(obj));
+            ToMap annotation = field.getAnnotation(ToMap.class);
+            if (field.getType().equals(List.class)) {
+                List<Map<String, Object>> listMap = new ArrayList();
+                List<Object> list = (List<Object>) field.get(obj);
+                for (Object o1 : list) {
+                    listMap.add(ObjectTransform.object2Map(o1));
+                }
+                map.put(field.getName(), listMap);
+            } else {
+                map.put(field.getName(), field.get(obj));
+            }
         }
         return map;
     }

@@ -11,3 +11,100 @@ post http://127.0.0.1:9200/follows/follower/5/_update
    	    "followers": [22]
    }
 }
+
+删除索引：
+curl -X "DELETE" http://127.0.0.1:9200/my_index/
+
+
+{
+  "mappings": {
+    "my_type": {
+      "properties": {
+        "full_text": {
+          "type":  "integer"
+        },
+        "exact_value": {
+          "type":  "keyword"
+        }
+      }
+    }
+  }
+}
+
+
+feed 搜索
+
+{
+    "query": {
+        "bool": {
+            "must":{
+                "terms" : {
+                    "authorId" : {
+                        "index" : "follows",
+                        "type" : "follower",
+                        "authorId" : "105001676",
+                        "path" : "followers"
+                    }
+                }
+            },
+            "filter":{
+                    "range": {
+                    "feedId": {"gt": 1}
+                }
+            }
+        }
+    },
+    "sort" : [
+        {
+            "createTime" : "desc"
+        }
+    ]
+}
+{
+    "query" : {
+        "terms" : {
+            "text" : "Hello"
+        }
+    }
+}
+
+"hits": [
+            {
+                "_index": "thanos",
+                "_type": "feed",
+                "_id": "105001787",
+                "_score": 1,
+                "_source": {
+                    "commentNum": 0,
+                    "feedId": 8,
+                    "createTime": "2018-06-26T07:54:35.215Z",
+                    "text": "抖音小姐姐",
+                    "authorId": 105001787,
+                    "mediaLink": [
+                        "https://www.xvideos.com/video36486195/dou_ying_girl_9"
+                    ],
+                    "likeNum": 0
+                }
+            }
+        ]
+
+修改已有索引的mapping 值
+post http://127.0.0.1:9200/thanos/feed/_mapping
+
+{
+  "properties": {
+    "createTime": {
+      "type":     "text",
+      "store":"true",
+      "fielddata": true
+    }
+  }
+}
+
+删除索引下的全部数据
+post http://127.0.0.1:9200/thanos/feed/_delete_by_query
+{
+  "query": {
+  	"match_all":{}
+  }
+}

@@ -1,24 +1,34 @@
 package com.thanos.common.es;
 
+import com.thanos.common.exception.ElasticSearchException;
 import com.thanos.common.exception.FeedPublishException;
+import com.thanos.common.pojo.FeedMapper;
 import com.thanos.common.utils.ObjectTransform;
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Setting;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 import java.net.InetAddress;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -53,7 +63,6 @@ public class EleasticSearchClient {
     public static void createIndex() {
         try {
             ActionResponse resp = client.admin().indices().prepareCreate(INDEX).get();
-            System.out.println("ok");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,7 +103,54 @@ public class EleasticSearchClient {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public static SearchResult searchDocument(String index, String type,
+                                      int size, String scrollId,
+                                      String key, String value) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            SearchResponse scrollResponse;
+            if (scrollId == null ) {
+                scrollResponse = client.prepareSearch(index)
+                        .setTypes(type)
+                        .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                        .setSize(size).setScroll(TimeValue.timeValueMinutes(1))
+                        .setQuery(QueryBuilders.wrapperQuery(value))
+                        .addSort(SortBuilders.fieldSort("feedId").order(SortOrder.DESC))
+                        .execute().actionGet();
+            } else {
+                scrollResponse = client.prepareSearchScroll(scrollId)
+                        .setScroll(TimeValue.timeValueMinutes(1)).execute().actionGet();
+            }
+            SearchHit[] hits = scrollResponse.getHits().getHits();
+            scrollId = scrollResponse.getScrollId();
+            SearchResult result = new SearchResult(hits, scrollId);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ElasticSearchException.ElasticSearchQueryException();
+        }
+    }
+
+    public static class SearchResult {
+
+        SearchHit[] searchHit;
+
+        String scrollId;
+
+        public SearchHit[] getSearchHit() {
+            return searchHit;
+        }
+
+        public String getScrollId() {
+            return scrollId;
+        }
+
+        public SearchResult(SearchHit[] searchHit, String scrollId) {
+            this.searchHit = searchHit;
+            this.scrollId = scrollId;
+        }
     }
 
 
