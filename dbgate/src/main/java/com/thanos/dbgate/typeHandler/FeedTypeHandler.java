@@ -1,6 +1,8 @@
 package com.thanos.dbgate.typeHandler;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thanos.common.pojo.FeedMapper;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
@@ -16,17 +18,17 @@ import java.util.List;
 /**
  * Created by wangjialong on 6/14/18.
  */
-public class FeedTypeHandler extends BaseTypeHandler<List<String>> {
+public class FeedTypeHandler extends BaseTypeHandler<List<FeedMapper.Resource>> {
 
     ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public List<String> getNullableResult(ResultSet rs, String columnName)
+    public List<FeedMapper.Resource> getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         // 使用rs.getString是tel字段是VARCHER类型
-        List<String> value = new ArrayList();
+        List<FeedMapper.Resource> value = new ArrayList();
         try {
-            value = mapper.readValue(rs.getString(columnName), ArrayList.class);
+            value = mapper.readValue(rs.getString(columnName), new TypeReference<List<FeedMapper.Resource>>(){});
         } catch (IOException e) {
 
         }
@@ -34,11 +36,11 @@ public class FeedTypeHandler extends BaseTypeHandler<List<String>> {
     }
 
     @Override
-    public List<String> getNullableResult(ResultSet rs, int columnIndex)
+    public List<FeedMapper.Resource> getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
-        List<String> value = new ArrayList();
+        List<FeedMapper.Resource> value = new ArrayList();
         try {
-            value = mapper.readValue(rs.getString(columnIndex), ArrayList.class);
+            value = mapper.readValue(rs.getString(columnIndex), new TypeReference<List<FeedMapper.Resource>>(){});
         } catch (IOException e) {
 
         }
@@ -46,11 +48,11 @@ public class FeedTypeHandler extends BaseTypeHandler<List<String>> {
     }
 
     @Override
-    public List<String> getNullableResult(CallableStatement cs, int columnIndex)
+    public List<FeedMapper.Resource> getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
-        List<String> value = new ArrayList();
+        List<FeedMapper.Resource> value = new ArrayList();
         try {
-            value = mapper.readValue(cs.getString(columnIndex), ArrayList.class);
+            value = mapper.readValue(cs.getString(columnIndex), new TypeReference<List<FeedMapper.Resource>>(){});
         } catch (IOException e) {
 
         }
@@ -59,7 +61,7 @@ public class FeedTypeHandler extends BaseTypeHandler<List<String>> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i,
-                                    List<String> param, JdbcType jdbcType) throws SQLException {
+                                    List<FeedMapper.Resource> param, JdbcType jdbcType) throws SQLException {
         try {
             String value = mapper.writeValueAsString(param);
             ps.setString(i, value);

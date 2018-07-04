@@ -16,20 +16,19 @@ public class DBGateController implements Runnable {
     @Autowired
     public SpringContextUtil springContextUtil;
 
-    @Autowired
-    private IAccount accountService;
+    /*@Autowired(required = false)
+    private IAccount accountService;*/
 
     private boolean running = false;
     private Thread thread;
 
-    @Autowired
     public DBGateController() {
         //该thread被该controller持有
         thread = new Thread(this);
     }
 
     public void start() {
-        try {
+        /*try {
             accountService.registerAccount("");
         }catch (Exception exception) {
             System.out.print(exception.getMessage());
@@ -38,7 +37,7 @@ public class DBGateController implements Runnable {
 //        running = true;
 //        ClassPathXmlApplicationContext context = (ClassPathXmlApplicationContext) springContextUtil.getApplicationContext();
 //        context.start();
-//        thread.start();
+//        thread.start();*/
     }
 
     public void run() {

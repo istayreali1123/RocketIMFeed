@@ -6,6 +6,6 @@ package com.thanos.common.user;
 public class UserPassport {
 
     public static long getUserIdByBduss(String bduss) {
-        return 105001878;
+        return 105001787;
     }
 }
