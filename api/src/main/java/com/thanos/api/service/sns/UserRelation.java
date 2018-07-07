@@ -1,7 +1,7 @@
 package com.thanos.api.service.sns;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.thanos.common.user.UserPassport;
+import com.thanos.common.user.UserInfo;
 import com.thanos.sns.service.intereface.Relation;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class UserRelation {
     public Relation relationHandler;
 
     public void addFollow(String bduss, long toUserId) {
-        long userId = UserPassport.getUserIdByBduss(bduss);
+        long userId = UserInfo.getUserIdByBduss(bduss);
 
         relationHandler.userFollow(userId, toUserId);
     }
