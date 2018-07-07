@@ -4,6 +4,8 @@ import com.thanos.common.exception.UserRegisterException;
 import com.thanos.common.pojo.UserIdAllocMapper;
 import com.thanos.common.pojo.UserMapper;
 
+import java.util.List;
+
 /**
  * Created by istayreali on 2018/6/3.
  */
@@ -19,5 +21,7 @@ public interface IAccount {
     UserMapper userLonginByPhone(String phone, String password);
 
     UserIdAllocMapper queryUserIdByPhone(String phone);
+
+    List<UserMapper> queryUserInfoByIds(List<String> userIds);
 
 }

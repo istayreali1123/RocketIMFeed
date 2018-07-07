@@ -7,6 +7,8 @@ import com.thanos.dbgate.service.IAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by wangjialong on 6/9/18.
  */
@@ -38,6 +40,10 @@ public class UserAccountEndPoint {
 
     public static UserIdAllocMapper queyUserIdByPhone(String phone) {
         return instance.acountEntity.queryUserIdByPhone(phone);
+    }
+
+    public static List<UserMapper> queryUserByIds(List<String> userIds) {
+        return instance.acountEntity.queryUserInfoByIds(userIds);
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class AbstractMapper {
+public abstract class AbstractMapper {
 
     private static Logger logger = Logger.getLogger(AbstractMapper.class.getName());
 
@@ -30,4 +30,6 @@ public class AbstractMapper {
         }
         return super.toString();
     }
+
+    public abstract String getIndentityId();
 }

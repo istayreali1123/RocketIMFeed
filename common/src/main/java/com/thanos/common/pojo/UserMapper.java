@@ -134,4 +134,8 @@ public class UserMapper extends AbstractMapper implements Serializable {
     public String toString() {
         return JSON.toJSONString(this);
     }
+
+    public String getIndentityId() {
+        return uuid;
+    }
 }

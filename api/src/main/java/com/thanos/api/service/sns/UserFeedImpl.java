@@ -2,10 +2,9 @@ package com.thanos.api.service.sns;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.thanos.common.pojo.FeedMapper;
-import com.thanos.common.user.UserPassport;
+import com.thanos.common.user.UserInfo;
 import com.thanos.sns.feed.FeedPull;
 import com.thanos.sns.service.intereface.Feed;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class UserFeedImpl implements UserFeed {
 
     public void feedPublish(String bduss, FeedMapper feed) {
         //1. 反解bduss, 获取用户user id
-        long userId = UserPassport.getUserIdByBduss(bduss);
+        long userId = UserInfo.getUserIdByBduss(bduss);
 
         //2. 检查feed内容， 做内容过滤
 
@@ -42,7 +41,7 @@ public class UserFeedImpl implements UserFeed {
 
     public List<FeedMapper> pullFeedList(String bduss, String scrollId, int size, StringBuilder lastId) {
 
-        long userId = UserPassport.getUserIdByBduss(bduss);
+        long userId = UserInfo.getUserIdByBduss(bduss);
         userId = 105001676;
         //1. get feed info list from user mail box
         List<FeedMapper> feedInMail = getFeedListByMailBox(userId, scrollId, size);
