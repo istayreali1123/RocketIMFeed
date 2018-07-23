@@ -81,16 +81,19 @@ public class EleasticSearchClient {
 
     }
 
-    public static void createDocument(Object data, String id) {
+    public static void createDocumentDefault(Object data, String id) {
+        createDocument(INDEX, TYPE, data, id);
+    }
+
+    public static void createDocument(String index, String type, Object data, String id) {
         try {
             String source = MAPPER.writeValueAsString(data);
             Map<String, Object> obj = ObjectTransform.object2Map(data);
-            ActionResponse response = client.prepareIndex(INDEX, TYPE, id).setSource(obj).get();
+            ActionResponse response = client.prepareIndex(index, type, id).setSource(obj).get();
         } catch (Exception e) {
             e.printStackTrace();
             throw new FeedPublishException();
         }
-
     }
 
     public static void createOrUpdateDocumentByMap(String index, String type , String idOrCode,
@@ -107,7 +110,7 @@ public class EleasticSearchClient {
 
     public static SearchResult searchDocument(String index, String type,
                                       int size, String scrollId,
-                                      String key, String value) {
+                                      String key, String value, String sortField) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             SearchResponse scrollResponse;
@@ -117,7 +120,7 @@ public class EleasticSearchClient {
                         .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                         .setSize(size).setScroll(TimeValue.timeValueMinutes(1))
                         .setQuery(QueryBuilders.wrapperQuery(value))
-                        .addSort(SortBuilders.fieldSort("feedId").order(SortOrder.DESC))
+                        .addSort(SortBuilders.fieldSort(sortField).order(SortOrder.DESC))
                         .execute().actionGet();
             } else {
                 scrollResponse = client.prepareSearchScroll(scrollId)

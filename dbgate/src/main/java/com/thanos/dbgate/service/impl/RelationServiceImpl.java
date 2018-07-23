@@ -5,10 +5,13 @@ import com.thanos.common.exception.UserRelationException;
 import com.thanos.common.pojo.RelationMapper;
 import com.thanos.dbgate.mapper.FollowDAO;
 import com.thanos.dbgate.service.IRelation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
@@ -46,4 +49,18 @@ public class RelationServiceImpl implements IRelation {
             relationDao.updateDirection(toUserId, fromUserId, rightRelation.direction);
         }
     }
+
+    public RelationMapper getRelationMapper(long fromUserId, long toUserId) {
+        return relationDao.queryByUserId(fromUserId, toUserId);
+    }
+
+    /*public List<Re> getUserFansListByPage(long userId, int count) {
+        return relationDao.queryByUserId(userId, count);
+    }
+
+    public List<Long> getUserFansListByPageAndId(long userId,
+                                                 long lastId,
+                                                 int count) {
+
+    }*/
 }

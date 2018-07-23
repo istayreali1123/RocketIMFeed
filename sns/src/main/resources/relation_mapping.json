@@ -1,0 +1,33 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 2
+  },
+  "mappings": {
+    "RELATION_TYPE": {
+      "dynamic": false,
+      "properties": {
+        "id": {
+          "type": "long",
+          "store": true
+        },
+        "fromUid": {
+          "type": "long",
+          "store": true
+        },
+        "toUid": {
+          "type": "long",
+          "store": true
+        },
+        "direction": {
+          "type": "integer",
+          "store": true
+        },
+        "createTime": {
+          "type": "keyword",
+          "store": true
+        }
+      }
+    }
+  }
+}

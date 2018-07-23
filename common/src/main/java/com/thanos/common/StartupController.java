@@ -1,7 +1,7 @@
 package com.thanos.common;
 
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import com.thanos.common.messageBroker.KafkaManager;
+import com.thanos.common.constant.FeedTopic;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -25,8 +25,16 @@ public class StartupController {
 
         context.start();
 
+        KafkaManager kafkaManager = (KafkaManager) context.getBean("mqManager");
+
+        String topic = FeedTopic.FEED_PUBLISH_TOPIC;
+        kafkaManager.createTopic(topic, 5, 1);
+        kafkaManager.subscribe(topic);
+        kafkaManager.start();
+
         ServerController controller = (ServerController) context.getBean("serverController");
 
         controller.start();
+
     }
 }

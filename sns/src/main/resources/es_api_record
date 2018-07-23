@@ -42,7 +42,7 @@ feed 搜索
                     "authorId" : {
                         "index" : "follows",
                         "type" : "follower",
-                        "authorId" : "105001676",
+                        "id" : "105001676",
                         "path" : "followers"
                     }
                 }
