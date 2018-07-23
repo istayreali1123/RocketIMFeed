@@ -29,7 +29,7 @@
         <result column="fromUid" jdbcType="BIGINT" property="fromUid" javaType="long"/>
         <result column="toUid" jdbcType="BIGINT" property="toUid" javaType="long"/>
         <result column="direction" jdbcType="TINYINT" property="direction" />
-        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="createTime" jdbcType="TIMESTAMP" javaType="String" property="createTime"/>
     </resultMap>
 
     <insert id="addFollow" useGeneratedKeys="true" keyProperty="relation.id" parameterType="com.thanos.common.pojo.RelationMapper" >
@@ -47,5 +47,8 @@
         update follows set direction=#{direction} where fromUid=#{fromUserId} and toUid=#{toUserId}
     </update>
 
-
+    <select id="getUserFansListByPage" resultMap="followEntity" >
+        select id, fromUid, toUid, direction, createTime
+        from follows where fromUid=#{userId} limit #{count}
+    </select>
 </mapper>

@@ -6,7 +6,9 @@ import com.thanos.common.cache.ServiceCache;
 import com.thanos.common.pojo.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,7 +33,12 @@ public class UserInfo {
     }
 
     public static long getUserIdByBduss(String bduss) {
-        return 105001787;
+        try {
+            final Base64.Decoder decoder = Base64.getDecoder();
+            return Long.valueOf(new String(decoder.decode(bduss), "UTF-8"));
+        } catch(UnsupportedEncodingException e) {
+            return 0;
+        }
     }
 
 

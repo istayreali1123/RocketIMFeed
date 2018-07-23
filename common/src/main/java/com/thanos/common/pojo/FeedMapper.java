@@ -1,8 +1,6 @@
 package com.thanos.common.pojo;
 
 import com.thanos.common.annotations.ToMap;
-import org.springframework.context.annotation.Lazy;
-import sun.jvm.hotspot.debugger.linux.sparc.LinuxSPARCThreadContext;
 
 import java.io.Serializable;
 import java.util.ArrayList;

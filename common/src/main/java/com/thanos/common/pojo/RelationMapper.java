@@ -1,6 +1,7 @@
 package com.thanos.common.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by wangjialong on 6/19/18.
@@ -22,10 +23,10 @@ public class RelationMapper implements Serializable {
         this.fromUid = fromUid;
         this.toUid = toUid;
         this.direction = direction;
-        this.createTime = System.currentTimeMillis();
+        this.createTime = new Date(System.currentTimeMillis()).toString();
     }
 
-    public long createTime;
+    public String createTime;
 
     public void setId(long id) {
         this.id = id;
@@ -51,7 +52,7 @@ public class RelationMapper implements Serializable {
         return direction;
     }
 
-    public long getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
@@ -63,7 +64,7 @@ public class RelationMapper implements Serializable {
         this.direction = direction;
     }
 
-    public void setCreateTime(long createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 }

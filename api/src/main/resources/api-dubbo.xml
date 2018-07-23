@@ -11,7 +11,7 @@
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:annotation package="com.thanos.api,com.thanos.account,com.thanos.sns"/>
+    <dubbo:annotation package="com.thanos.api,com.thanos.account"/>
     <context:component-scan base-package="com.thanos.api,com.thanos.common"/>
 
     <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->

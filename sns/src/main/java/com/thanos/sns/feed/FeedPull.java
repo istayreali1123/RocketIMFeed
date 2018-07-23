@@ -30,7 +30,7 @@ public class FeedPull implements Feed {
         Query query = buildQuery(userId, gt);
         try {
             EleasticSearchClient.SearchResult searchHits = EleasticSearchClient.searchDocument("thanos", "feed",
-                    size, scrollId,"authorId", mapper.writeValueAsString(buildQuery(userId, gt)));
+                    size, scrollId,"authorId", mapper.writeValueAsString(buildQuery(userId, gt)), "feedId");
             for (SearchHit searchHit: searchHits.getSearchHit()) {
                 String stringData = searchHit.getSourceAsString();
                 feedList.add(mapper.readValue(stringData, FeedMapper.class));
