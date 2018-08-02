@@ -40,7 +40,7 @@ public class KafkaManager {
             while(true) {
                 try {
                     Object message = KafkaConsumer.take();
-                    if (message !=null ) {
+                    if (message != null ) {
                         ObjectMapper mapper = new ObjectMapper();
                         MessageEntity data = mapper.readValue((String)message, new TypeReference<MessageEntity>(){});
                         this.dispatch(data);

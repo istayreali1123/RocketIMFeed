@@ -68,24 +68,23 @@ public class DeliverQueue {
                     break;
                 }
             }
+            lockQueue.readLock().unlock();
         } catch (InterruptedException e) {
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            lockQueue.readLock().unlock();
-        }
         return taskList;
     }
 
     public static DeliverTask poll() {
-        DeliverTask task;
+        DeliverTask task = null;
         try {
             spinLock.lock();
             task = taskPriorityQueue.poll();
-        } finally {
             spinLock.unlock();
+        } catch(Exception e) {
+            e.printStackTrace();
         }
         return task;
     }
@@ -94,18 +93,22 @@ public class DeliverQueue {
         while (true) {
             try {
                 if (taskPriorityQueue.isEmpty()) {
-                    try {
-                        lockQueue.writeLock().lockInterruptibly();
+                    lockQueue.writeLock().lockInterruptibly();
+                    if ( !taskPriorityQueue.isEmpty() ) {
+                        lockQueue.writeLock().unlock();
+                        break;
+                    } else {
                         writeCondition.await();
-                    } finally {
-                         lockQueue.writeLock().unlock();
+                        lockQueue.writeLock().unlock();
                     }
                 } else {
                     break;
                 }
             } catch (InterruptedException e) {
 
-            } finally {
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally{
             }
         }
     }
@@ -138,8 +141,8 @@ public class DeliverQueue {
             if (!Objects.equals(Thread.currentThread(), getCurrentOwner())) {
                 throw new IllegalMonitorStateException();
             }
-            sync.tryRelease(1);
             setCurrentOwner(null);
+            sync.tryRelease(1);
         }
     }
 

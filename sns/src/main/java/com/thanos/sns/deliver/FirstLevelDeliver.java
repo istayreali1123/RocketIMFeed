@@ -46,13 +46,15 @@ public class FirstLevelDeliver implements Deliver {
         List<DeliverTask> taskList = new ArrayList();
         while (true) {
             try {
+                taskList.clear();
                 Term term = new Term(userId);
                 Query query = new Query(term);
                 ObjectMapper mapper = new ObjectMapper();
+                String testV = mapper.writeValueAsString(query);
                 EleasticSearchClient.SearchResult searchHits = EleasticSearchClient
                         .searchDocument(RELATION_INDEX, RELATION_TYPE, 5,  scrollId,
                                 "", mapper.writeValueAsString(query), "createTime");
-                if( searchHits.getSearchHit().length ==0 ) {
+                if( searchHits.getSearchHit().length == 0 ) {
                     break;
                 }
                 for (SearchHit searchHit : searchHits.getSearchHit()) {

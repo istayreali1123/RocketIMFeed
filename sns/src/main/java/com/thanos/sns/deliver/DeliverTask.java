@@ -1,9 +1,11 @@
 package com.thanos.sns.deliver;
 
+import java.io.Serializable;
+
 /**
  * Created by wangjialong on 7/18/18.
  */
-public class DeliverTask implements Comparable<DeliverTask> {
+public class DeliverTask implements Comparable<DeliverTask>, Serializable {
 
     public long fromUid;
 
@@ -12,6 +14,9 @@ public class DeliverTask implements Comparable<DeliverTask> {
     public long createTime = System.currentTimeMillis();
 
     public long feedId;
+
+    public DeliverTask() {
+    }
 
     public long getFeedId() {
         return feedId;

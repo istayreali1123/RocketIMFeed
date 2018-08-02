@@ -124,7 +124,7 @@ public class EleasticSearchClient {
                         .execute().actionGet();
             } else {
                 scrollResponse = client.prepareSearchScroll(scrollId)
-                        .setScroll(TimeValue.timeValueMinutes(1)).execute().actionGet();
+                        .setScroll(TimeValue.timeValueMinutes(10)).execute().actionGet();
             }
             SearchHit[] hits = scrollResponse.getHits().getHits();
             scrollId = scrollResponse.getScrollId();
