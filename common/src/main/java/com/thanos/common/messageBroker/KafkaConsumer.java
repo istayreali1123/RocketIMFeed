@@ -58,7 +58,8 @@ public class KafkaConsumer {
     public static Object take() {
         try {
             return messageQueue.poll(5, TimeUnit.SECONDS);
-        } catch(InterruptedException e) {
+        } catch(Exception e) {
+            e.printStackTrace();
             return null;
         }
 

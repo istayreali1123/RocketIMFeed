@@ -1,64 +1,41 @@
-package com.thanos.session.cache;
+package com.thanos.common.redis;
 
-import com.thanos.session.constants.RedisConstants;
-import com.thanos.session.constants.SessionConstants;
-import com.thanos.session.utils.RedisCacheUtil;
-import com.thanos.session.utils.RedisClusterCacheUtil;
-import org.apache.catalina.Session;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import redis.clients.jedis.HostAndPort;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.Protocol;
+import com.thanos.common.constant.RedisConstants;
+import redis.clients.jedis.*;
 
-import javax.print.attribute.standard.NumberUp;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.*;
-import java.util.logging.Logger;
 
-public class RedisCache implements DataCache {
+import static com.thanos.common.constant.RedisConstants.CLUSTER_ENABLED;
+import static com.thanos.common.constant.RedisConstants.DEFAULT_CLUSTER_ENABLED;
 
-    //定义静态接口类作为实例成员变量，静态变量，同一个类的所有实例共享同一块内存区，配置类用单例即可
-    private static DataCache dataCache;
+/**
+ * Created by wangjialong on 7/26/18.
+ */
+public class RedisConnectionFactory {
 
-    private Log log = LogFactory.getLog(RedisCache.class);
+    public static RedisConnectionFactory instance;
 
-    public RedisCache() {
-        initialize();
-    }
+    public static JedisCommands jedisClient;
 
-    public byte[] set(String key, byte[] value) {
-        return dataCache.set(key, value);
-    }
+    //for cluster mode
+    public static JedisPool jedisPool;
 
-    public Long setnx(String key, byte[] value) {
-        return dataCache.setnx(key, value);
-    }
+    public static Boolean clusterEnabled;
 
-    public Long expire(String key, int seconds) {
-        return dataCache.expire(key, seconds);
-    }
+    private static final int MAX_REDIRECTIONS = 5;
 
-    public byte[] get(String key) {
-        return dataCache.get(key);
-    }
-
-    public Long delete(String key) {
-        return dataCache.delete(key);
-    }
-
-    private void initialize() {
-        if (null != dataCache) {
+    public void initialize() {
+        if (null != instance) {
             return;
         }
         //加载配置文件
         Properties properties = loadProperties();
         //判断配置文件具体参数
         //是否集群模式
-        Boolean clusterEnabled = Boolean.valueOf(properties.getProperty(RedisConstants.CLUSTER_ENABLED, RedisConstants.DEFAULT_CLUSTER_ENABLED));
+        clusterEnabled = Boolean.valueOf(properties.getProperty(CLUSTER_ENABLED, DEFAULT_CLUSTER_ENABLED));
         //host and password
         String hosts = properties.getProperty(RedisConstants.HOST, Protocol.DEFAULT_HOST.concat(":").concat(String.valueOf(Protocol.DEFAULT_PORT)));
         String password = properties.getProperty(RedisConstants.PASSWORD);
@@ -71,34 +48,42 @@ public class RedisCache implements DataCache {
         Collection<? extends Serializable> redisNodes = getJedisNodes(hosts, clusterEnabled);
 
         if (clusterEnabled) {
-            dataCache = new RedisClusterCacheUtil((Set<HostAndPort>)redisNodes, password, timeout, getPoolConfig(properties));
-        }else {
-            dataCache = new RedisCacheUtil(((List<String>)redisNodes).get(0),  Integer.parseInt(((List<String>)redisNodes).get(1)), password, dataBase, timeout, getPoolConfig(properties));
+            jedisClient = new JedisCluster((Set)redisNodes, timeout, Protocol.DEFAULT_TIMEOUT, MAX_REDIRECTIONS, password, getPoolConfig(properties));
+        } else {
+            jedisPool = new JedisPool(getPoolConfig(properties), ((List<String>) redisNodes).get(0),
+                    Integer.parseInt(((List<String>) redisNodes).get(1)), timeout, password, dataBase);
         }
     }
 
+    public static JedisCommands getConnection() {
+        if (clusterEnabled) {
+            return jedisClient;
+        }
+        return jedisPool.getResource();
+    }
+
+
     private Properties loadProperties() {
-        Properties rel = null;
+        Properties rel = new Properties();
         try {
-            String filePath = System.getProperty(SessionConstants.CATALINA_BASE).concat(File.separator).concat(SessionConstants.CONF).concat(File.separator).concat(RedisConstants.PROPERTIES_FILE);
+            String filePath = "common.properties";
             InputStream inputStream = null;
             try {
-                inputStream = null != filePath && filePath.length() > 0 && (new File(filePath)).exists() ? new FileInputStream(filePath) : null;
-                if (null == inputStream) {
-                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-                    inputStream = classLoader.getResourceAsStream(RedisConstants.PROPERTIES_FILE);
-                }
+                inputStream =  RedisConnectionFactory.class.getClassLoader().getResourceAsStream(filePath);
                 rel.load(inputStream);
-            }finally {
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
                 inputStream.close();
             }
-        }catch (Exception exception) {
-            log.error("loadProperties exception : ", exception);
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
         return rel;
     }
 
-//此类实现了Serilizable的接口，就可继承Serializable接口
+    //此类实现了Serilizable的接口，就可继承Serializable接口
     private Collection<? extends Serializable> getJedisNodes(String hosts, boolean clusterEnabled) {
         if (null != hosts && hosts.length() > 0) {
             //List与Set都为Collection，可以通过泛型直接返回
@@ -113,7 +98,7 @@ public class RedisCache implements DataCache {
                 if (clusterEnabled) {
                     nodes = (null == nodes) ? new HashSet<HostAndPort>() : null;
                     nodes.add(new HostAndPort(hostAndPort[0], Integer.parseInt(hostAndPort[1])));
-                }else {
+                } else {
                     //非集群模式，只解析一个节点
                     int port = Integer.parseInt(hostAndPort[1]);
                     if (hostAndPort[0].length() > 0 && port > 0) {

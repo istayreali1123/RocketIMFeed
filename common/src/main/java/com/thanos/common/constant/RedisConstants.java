@@ -1,4 +1,4 @@
-package com.thanos.session.constants;
+package com.thanos.common.constant;
 
 public interface RedisConstants {
 

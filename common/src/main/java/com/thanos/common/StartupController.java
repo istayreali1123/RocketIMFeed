@@ -28,8 +28,10 @@ public class StartupController {
         KafkaManager kafkaManager = (KafkaManager) context.getBean("mqManager");
 
         String topic = FeedTopic.FEED_PUBLISH_TOPIC;
+        String pushTopic = FeedTopic.FEED_DELIVERY_TOPIC;
         kafkaManager.createTopic(topic, 5, 1);
-        kafkaManager.subscribe(topic);
+        kafkaManager.createTopic(pushTopic, 5, 1);
+        kafkaManager.subscribe(topic, pushTopic);
         kafkaManager.start();
 
         ServerController controller = (ServerController) context.getBean("serverController");
