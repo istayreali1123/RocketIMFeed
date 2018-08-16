@@ -18,8 +18,8 @@
 
         <!-- 配置dbcp数据源 -->
         <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-            <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-            <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:6600/HiClub?useUnicode=true&amp;cmpcharacterEncoding=utf8&amp;useSSL=false"/>
+            <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/HiClub?useUnicode=true&amp;cmpcharacterEncoding=utf8&amp;useSSL=false"/>
             <property name="user" value="cloud_admin"/>
             <property name="password" value="IaaS@OS-CLOUD8!"/>
             <property name="initialPoolSize" value="5" />
